@@ -113,21 +113,9 @@ class incidentReportController extends Controller
         return view('employeeFolder.report', $this->incidentReportService->getReports());
     }
 
-    public function store(Request $request)
+    public function store(CreateNewReportRequest $request)
     {
-        $request->validate([
-            'date' => 'required | date',
-            'fire_alarm_level' => 'required | string',
-            'cause_of_incident' => 'required | string',
-            'estimated_damage' => 'required | integer',
-            'reported_by' => 'required | integer',
-            'description' => 'required | string',
-            'is_approved' => 'nullable | boolean',
-            'is_rejected' => 'nullable | boolean',
-            'baranggay' => 'required | string',
-            'location' => 'required | string',
-        ]);
-        $this->incidentReportService->create($request);
+        $this->incidentReportService->create($request->validated());
 
         return redirect()->route('create');
     }

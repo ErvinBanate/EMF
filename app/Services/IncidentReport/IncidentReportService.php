@@ -19,7 +19,7 @@ class IncidentReportService
         $this->incidentReport = $incidentReport;
     }
 
-    public function create(Request $request): void
+    public function create($request): void
     {
         $this->incidentReport->create($this->parseData($request));
     }
@@ -153,17 +153,18 @@ class IncidentReportService
         ];
     }
 
-    public function parseData(Request $request): array
+    public function parseData($request): array
     {
+        // dd($request);
         return [
-            'date' => $request->input('input-date'),
-            'fire_alarm_level' => $request->input('input-fire-alarm-level'),
-            'cause_of_incident' => $request->input('input-cause-of-incident'),
-            'estimated_damage' => $request->input('input-estimated-damage'),
-            'reported_by' => $request->input('input-reported-by'),
-            'description' => $request->input('input-description'),
-            'baranggay' => $request->input('input-baranggay'),
-            'location' => $request->input('input-location'),
+            'date' => $request['input-date'],
+            'fire_alarm_level' => $request['input-fire-alarm-level'],
+            'cause_of_incident' => $request['input-cause-of-incident'],
+            'estimated_damage' => $request['input-estimated-damage'],
+            'reported_by' => $request['input-reported-by'],
+            'description' => $request['input-description'],
+            'baranggay' => $request['input-baranggay'],
+            'location' => $request['input-location'],
         ];
     }
 }

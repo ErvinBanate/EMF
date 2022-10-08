@@ -24,16 +24,14 @@ class CreateNewReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required | date',
-            'fire_alarm_level' => 'required | string',
-            'cause_of_incident' => 'required | string',
-            'estimated_damage' => 'required | integer',
-            'reported_by' => 'required | integer',
-            'description' => 'required | string',
-            'is_approved' => 'nullable | boolean',
-            'is_rejected' => 'nullable | boolean',
-            'baranggay' => 'required | string',
-            'location' => 'required | string',
+            'input-date' => 'required | date',
+            'input-fire-alarm-level' => 'required | string',
+            'input-cause-of-incident' => 'required | string',
+            'input-estimated-damage' => 'required | integer',
+            'input-reported-by' => 'required | integer',
+            'input-description' => 'required | string',
+            'input-baranggay' => 'required | string',
+            'input-location' => 'required | string',
         ];
     }
 }

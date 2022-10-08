@@ -15,41 +15,62 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
                             <form class="g-3" method="POST" action="{{ route('store') }}">
                                 @csrf
                                 <div class="row modal-body">
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <label class="form-label" for="input-date">Date</label>
-                                        <input class="form-control" type="date" name="input-date">
+                                        <input class="form-control" type="date" name="input-date"
+                                            value="{{ old('input-date') }}" required>
+                                        @error('input-date')
+                                            <span class="invalidFeedback">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
                                         <label class="form-label" for="input-baranggay">Baranggay</label>
-                                        <input class="form-control" type="text" name="input-baranggay">
+                                        <input class="form-control" type="text" name="input-baranggay"
+                                            value="{{ old('input-baranggay') }}" required>
+                                        @error('input-baranggay')
+                                            <span class="invalidFeedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label" for="input-location">Exact Location</label>
-                                        <input class="form-control" type="text" name="input-location">
+                                        <input class="form-control" type="text" name="input-location"
+                                            value="{{ old('input-location') }}" required>
+                                        @error('input-location')
+                                            <span class="invalidFeedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="input-fire-alarm-level">Fire Alarm Level</label>
-                                        <select class="form-control" name="input-fire-alarm-level">
+                                        <select class="form-control" name="input-fire-alarm-level"
+                                            value="{{ old('input-fire-alarm-level') }}" required>
                                             @foreach ($fireAlarmLevels as $fireAlarmLevel)
                                                 <option value="{{ $fireAlarmLevel }}">{{ $fireAlarmLevel }}</option>
                                             @endforeach
                                         </select>
+                                        @error('input-fire-alarm-level')
+                                            <span class="invalidFeedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="input-cause-of-incident">Cause of Incident</label>
-                                        <input class="form-control" type="text" name="input-cause-of-incident">
+                                        <input class="form-control" type="text" name="input-cause-of-incident"
+                                            value="{{ old('input-cause-of-incident') }}" required>
+                                        @error('input-cause-of-incident')
+                                            <span class="invalidFeedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="input-estimated-damage">Estimated Damage</label>
@@ -58,7 +79,13 @@
                                                 <p class="form-control"><strong>&#8369;</strong></p>
                                             </div>
                                             <div class="col-10">
-                                                <input class="form-control" type="text" name="input-estimated-damage">
+                                                <input class="form-control" type="text" name="input-estimated-damage"
+                                                    value="{{ old('input-estimated-damage') }}" required>
+                                                @error('input-estimated-damage')
+                                                    <span class="invalidFeedback" role="alert">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +97,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label" for="input-description">Description</label>
-                                        <textarea class="form-control" type="text" name="input-description" rows="4" rows="10"></textarea>
+                                        <textarea class="form-control" type="text" name="input-description" rows="4" rows="10" required>{{ old('input-description') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -84,16 +111,26 @@
             </div>
         </div>
 
+        <div class="pagetitle">
+            <h3>Fire Incident Reports</h3>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Incident Reports</li>
+                </ol>
+            </nav>
+        </div>
+
         <div class="row justify-content-center">
-            <div class="col-md-12">
-                <h1 class='text-center'>Fire Incident Reports</h1>
+            <div class="col-md-12 bg-light shadow">
+                <h1 class='text-center'></h1>
                 <br>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Create Incident Report
                 </button>
                 <br>
                 <br>
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover overflowTable">
                     <thead>
                         <th class='text-center'>Baranggay</th>
                         <th class='text-center'>Date</th>
@@ -122,10 +159,15 @@
                                 @else
                                     <td class='text-center'>Data Error</td>
                                 @endif
-                                <td class="text-center"><a href="{{ route('show', $report['id']) }}"><button
-                                            class="btn btn-primary">View</button></a>
-                                </td>
+                                @if ($report['is_approved'] == 1 && $report['is_rejected'] == 0)
+                                    <td class="text-center" colspan="3"><a
+                                            href="{{ route('show', $report['id']) }}"><button
+                                                class="btn btn-primary">View</button></a>
+                                    </td>
+                                @endif
                                 @if ($report['is_approved'] == 0 || $report['is_rejected'] == 1)
+                                    <td class="text-center"><a href="{{ route('show', $report['id']) }}"><button
+                                                class="btn btn-primary">View</button></a>
                                     <td class="text-center"><a href="{{ route('edit', $report['id']) }}"><button
                                                 class="btn btn-primary">Edit</button></a>
                                     </td>

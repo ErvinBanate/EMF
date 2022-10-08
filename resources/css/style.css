@@ -8224,8 +8224,8 @@ h1, h2, h3, h4, h5,
     margin-left: -300px; }
   #sidebar .logo {
     display: block;
-    width: 150px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
     margin: 0 auto; }
     #sidebar .logo span {
       display: block; }
@@ -8285,4 +8285,5 @@ a[data-toggle="collapse"] {
     border-color: #f8b739 !important; }
 
 .footer p {
-  color: rgba(255, 255, 255, 0.75s); }
+  color: rgba(255, 255, 255, 1ss); 
+}

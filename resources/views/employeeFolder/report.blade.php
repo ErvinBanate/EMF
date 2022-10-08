@@ -3,13 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center py-3 my-3">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <h5>Approved Reports: {{ $approved }}</h5>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <h5>Pending Reports: {{ $pending }}</h5>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <h5>Rejected Reports: {{ $rejected }}</h5>
             </div>
             <div class="col-md-3">

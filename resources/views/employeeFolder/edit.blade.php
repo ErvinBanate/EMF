@@ -1,10 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="pagetitle">
+        <h3>Edit Incident Reports</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+                <li class="breadcrumb-item active"><a href="{{ url('/incidentReport') }}">Incident Reports</a></li>
+                <li class="breadcrumb-item active">Edit Incident Reports</li>
+            </ol>
+        </nav>
+    </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h1 class="text-center">Edit Fire Incident Report</h1>
                 <form class="row g-3" method="POST" action="{{ route('update', $report->id) }}">
                     @csrf
                     <div class="col-md-3">
