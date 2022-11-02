@@ -15,7 +15,9 @@ class CreateIncidentReportsTable extends Migration
     {
         Schema::create('incident_reports', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->string('month');
+            $table->integer('day');
+            $table->integer('year');
             $table->string('fire_alarm_level');
             $table->string('cause_of_incident');
             $table->integer('estimated_damage');

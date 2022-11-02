@@ -15,20 +15,54 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            <form class="g-3" method="POST" action="{{ route('store') }}">
+                            <form class="g-3" action="{{ route('store') }}" method="POST">
                                 @csrf
                                 <div class="row modal-body">
-                                    <div class="col-md-5">
-                                        <label class="form-label" for="input-date">Date</label>
-                                        <input class="form-control" type="date" name="input-date"
-                                            value="{{ old('input-date') }}" required>
-                                        @error('input-date')
-                                            <span class="invalidFeedback">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="input-month">Month</label>
+                                        <select class="form-control" name="input-month" value="{{ old('input-month') }}">
+                                            @foreach ($months as $month)
+                                                <option value="{{ $month }}">{{ $month }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('input-month')
+                                            <span class="invalidFeedback" role="alert">
                                                 {{ $message }}
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="input-day">Day</label>
+                                        <select class="form-control" name="input-day" value="{{ old('input-day') }}">
+                                            @for ($day = 1; $day <= 31; $day++)
+                                                <option value="{{ $day }}">{{ $day }}</option>
+                                            @endfor
+                                        </select>
+                                        @error('input-day')
+                                            <span class="invalidFeedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="input-year">Year</label>
+                                        <select class="form-control" name="input-year" value="{{ old('input-day') }}">
+                                            @for ($year = 2050; $year >= 1950; $year--)
+                                                @if ($year === now()->year)
+                                                    <option value="{{ $year }}" selected>{{ $year }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $year }}">{{ $year }}</option>
+                                                @endif
+                                            @endfor
+                                        </select>
+                                        @error('input-year')
+                                            <span class="invalidFeedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12">
                                         <label class="form-label" for="input-baranggay">Baranggay</label>
                                         <input class="form-control" type="text" name="input-baranggay"
                                             value="{{ old('input-baranggay') }}" required>
@@ -99,6 +133,10 @@
                                         <label class="form-label" for="input-description">Description</label>
                                         <textarea class="form-control" type="text" name="input-description" rows="4" rows="10" required>{{ old('input-description') }}</textarea>
                                     </div>
+                                    {{-- <div class="col-md-12 mt-3">
+                                        <label for="formFile" class="form-label">Evidence</label>
+                                        <input class="form-control" type="file" id="formFile" name="input-evidence">
+                                    </div> --}}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -110,41 +148,40 @@
                 </div>
             </div>
         </div>
-
         <div class="pagetitle">
             <h3>Fire Incident Reports</h3>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Incident Reports</li>
+                    <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+                    <li class="breadcrumb-item active">Fire Incident Reports</li>
                 </ol>
             </nav>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-md-12 bg-light shadow">
-                <h1 class='text-center'></h1>
-                <br>
+            <div class="col-md-12 pt-3 bg-light shadow">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Create Incident Report
                 </button>
                 <br>
                 <br>
                 <table class="table table-bordered table-hover overflowTable">
-                    <thead>
+                    <thead class="thead-dark">
                         <th class='text-center'>Baranggay</th>
-                        <th class='text-center'>Date</th>
+                        <th class='text-center'>Date of Incident</th>
                         <th class='text-center'>Fire Alarm Level</th>
                         <th class='text-center'>Cause of Incident</th>
                         <th class='text-center'>Estimated Damage</th>
                         <th class='text-center'>Reported By</th>
                         <th class='text-center'>Status</th>
+                        <th colspan="3"></th>
                     </thead>
                     <tbody>
                         @foreach ($reports as $report)
                             <tr>
                                 <td class='text-center'>{{ $report['baranggay'] }}</td>
-                                <td class='text-center'>{{ $report['date'] }}</td>
+                                <td class='text-center'>{{ $report['month'] }} {{ $report['day'] }},
+                                    {{ $report['year'] }}</td>
                                 <td class='text-center'>{{ $report['fire_alarm_level'] }}</td>
                                 <td class='text-center'>{{ $report['cause_of_incident'] }}</td>
                                 <td class='text-center'>&#8369;{{ number_format($report['estimated_damage']) }}
@@ -183,12 +220,19 @@
             </div>
         </div>
     @elseif ($role === 'Team Leader')
+        <div class="pagetitle">
+            <h3>Pending Fire Incident Reports</h3>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Incident Reports</li>
+                </ol>
+            </nav>
+        </div>
         <div class="row justify-content-center">
-            <div class="col-md-12">
-                <h1 class='text-center'>Pending Fire Incident Reports</h1>
-                <br>
-                <table class="table table-bordered table-hover">
-                    <thead>
+            <div class="col-md-12 pt-4 bg-light shadow">
+                <table class="table table-bordered table-hover overflowTable">
+                    <thead class="thead-dark">
                         <th class='text-center'>Baranggay</th>
                         <th class='text-center'>Date</th>
                         <th class='text-center'>Fire Alarm Level</th>
@@ -196,13 +240,15 @@
                         <th class='text-center'>Estimated Damage</th>
                         <th class='text-center'>Reported By</th>
                         <th class='text-center'>Status</th>
+                        <th></th>
                     </thead>
                     <tbody>
                         @foreach ($reports as $report)
                             @if ($report['is_approved'] == 0 && $report['is_rejected'] == 0)
                                 <tr>
                                     <td class='text-center'>{{ $report['baranggay'] }}</td>
-                                    <td class='text-center'>{{ $report['date'] }}</td>
+                                    <td class='text-center'>{{ $report['month'] }} {{ $report['day'] }},
+                                        {{ $report['year'] }}</td>
                                     <td class='text-center'>{{ $report['fire_alarm_level'] }}</td>
                                     <td class='text-center'>{{ $report['cause_of_incident'] }}</td>
                                     <td class='text-center'>

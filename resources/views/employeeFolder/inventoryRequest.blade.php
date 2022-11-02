@@ -46,12 +46,24 @@
         </div>
     </div>
 
-    <div class="container my-4 ">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            Create Request
-        </button>
+    <div class="pagetitle">
+        <h3>Inventory Request</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+                <li class="breadcrumb-item active">Inventory Request</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="my-4 px-4 py-3 bg-light shadow">
+        <div class="mb-3">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Create Request
+            </button>
+        </div>
         <div class="row justify-content-center">
-            <table class="table table-bordered table-hover w-75">
+            <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <th>Product</th>
                     <th>Stock</th>

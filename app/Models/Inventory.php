@@ -13,7 +13,9 @@ class Inventory extends Model
 
     protected $fillable = [
         'product_name',
-        'stock',
+        'total_stock',
+        'working_stock',
+        'not_working_stock',
         'product_type',
     ];
 }

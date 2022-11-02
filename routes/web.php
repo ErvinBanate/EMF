@@ -25,6 +25,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/updateUser/{user}', [adminController::class, 'updateUser'])->name('updateUser');
+    Route::post('/newPassword/{user}', [adminController::class, 'newPassword'])->name('newPassword');
+
     Route::post('/store', [IncidentReportController::class, 'store'])->name('store');
     Route::post('/update/{incident_report}', [IncidentReportController::class, 'update'])->name('update');
     Route::get('/approve/{incident_report}', [IncidentReportController::class, 'approve'])->name('approve');
@@ -51,7 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/incidentReport', [IncidentReportController::class, 'create'])->name('create');
     Route::get('/inventory', [IncidentReportController::class, 'inventory'])->name('inventory');
     Route::get('/adminInventory', [IncidentReportController::class, 'adminInventory'])->name('adminInventory');
-    Route::get('/report', [IncidentReportController::class, 'report'])->name('report');
+    Route::get('/summaryReport', [IncidentReportController::class, 'report'])->name('report');
+    Route::get('/detailedReport', [IncidentReportController::class, 'detailedReport'])->name('detailedReport');
     Route::get('/downloadApprovedReports', [IncidentReportController::class, 'downloadApprovedReports'])->name('downloadApprovedReports');
     Route::get('/downloadPendingReports', [IncidentReportController::class, 'downloadPendingReports'])->name('downloadPendingReports');
     Route::get('/downloadRejectedReports', [IncidentReportController::class, 'downloadRejectedReports'])->name('downloadRejectedReports');
@@ -60,4 +64,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/downloadRejectedPdf', [IncidentReportController::class, 'downloadRejectedPdf'])->name('downloadRejectedPdf');
     Route::get('/downloadReportPdf/{incident_report}', [IncidentReportController::class, 'downloadReportPdf'])->name('downloadReportPdf');
     Route::get('/inventoryRequest', [IncidentReportController::class, 'inventoryRequest'])->name('inventoryRequest');
+    Route::get('/editUser/{user}', [adminController::class, 'editUser'])->name('editUser');
+    Route::get('/changePassword/{user}', [adminController::class, 'changePassword'])->name('changePassword');
 });

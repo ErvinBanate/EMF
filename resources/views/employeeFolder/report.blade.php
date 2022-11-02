@@ -1,8 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center py-3 my-3">
+    <div class="pagetitle">
+        <h3>Summary Report</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+                <li class="breadcrumb-item">Generate Reports</li>
+                <li class="breadcrumb-item active">Summary Report</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container bg-light shadow py-4">
+        <div class="row justify-content-center pb-3 my-3">
             <div class="col-md-3">
                 <h5>Approved Reports: {{ $approved }}</h5>
             </div>

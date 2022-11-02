@@ -1,9 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4 ">
-        <div class="row justify-content-center">
-            <table class="table table-bordered table-hover w-75">
+    <div class="pagetitle">
+        <h3>Inventory Requests</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+                <li class="breadcrumb-item active">Inventory Requests</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center p-4 bg-light">
+            <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <th>Product</th>
                     <th>Stock</th>

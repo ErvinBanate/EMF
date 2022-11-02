@@ -24,7 +24,7 @@ class IncidentReportService
         $this->incidentReport->create($this->parseData($request));
     }
 
-    public function update(Request $request, IncidentReport $incident_report): void
+    public function update($request, IncidentReport $incident_report): void
     {
         $incident_report->update($this->parseData($request));
     }
@@ -155,9 +155,12 @@ class IncidentReportService
 
     public function parseData($request): array
     {
-        // dd($request);
+        // $imgBase64 = base64_encode($request['input-evidence']->extension());
+        // dd(base64_decode($imgBase64));
         return [
-            'date' => $request['input-date'],
+            'month' => $request['input-month'],
+            'day' => $request['input-day'],
+            'year' => $request['input-year'],
             'fire_alarm_level' => $request['input-fire-alarm-level'],
             'cause_of_incident' => $request['input-cause-of-incident'],
             'estimated_damage' => $request['input-estimated-damage'],
@@ -165,6 +168,7 @@ class IncidentReportService
             'description' => $request['input-description'],
             'baranggay' => $request['input-baranggay'],
             'location' => $request['input-location'],
+            'is_rejected' => 0,
         ];
     }
 }

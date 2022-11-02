@@ -17,7 +17,9 @@ class IncidentReport extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'date',
+        'month',
+        'day',
+        'year',
         'fire_alarm_level',
         'cause_of_incident',
         'estimated_damage',

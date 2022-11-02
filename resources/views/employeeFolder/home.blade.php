@@ -10,7 +10,7 @@
             </ol>
         </nav>
     </div>
-    <div class="row justify-content-between" style="margin-left: 75px; margin-top: 50px; margin-right: 63px;">
+    <div class="row justify-content-between" style="margin-left: 2%; margin-top: 2%; margin-right: 2%;">
         <div id="carouselImageControl" class="carousel slide col-6" data-ride="carousel" style="height: 400px;">
             <ol class="carousel-indicators">
                 <li data-target="#carouselImageControl" data-slide-to="0" class="active"></li>
@@ -41,11 +41,12 @@
         <div class="col-5 bg-light shadow">
             <h3 class="text-center my-4">New Approved Reports</h3>
             <table class="table table-bordered table-hover recentReports">
-                <thead>
+                <thead class="thead-dark">
                     <th class='text-center'>Baranggay</th>
                     <th class='text-center'>Fire Alarm Level</th>
                     <th class='text-center'>Cause of Incident</th>
                     <th class='text-center'>Estimated Damage</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     @foreach ($reports as $report)

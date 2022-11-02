@@ -1,37 +1,25 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
+    <title>FIRIMIS</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'EMS') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> --}}
     <style>
-        body {
-            background-color: rgb(244, 244, 244);
+        #sidebar {
+            height: 1075px;
+            background-color: maroon;
         }
 
         main {
-            margin-left: 25px;
-            margin-right: 25px;
+            background-color: rgb(252, 242, 222);
         }
 
         .recentReports {
@@ -39,109 +27,105 @@
             overflow: auto;
             display: inline-block;
         }
-
-        .overflowTable {
-            max-height: 800px;
-        }
-
-        .invalidFeedback {
-            color: red
-        }
     </style>
 </head>
 
 <body>
     <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar" style="background-color: maroon;">
+        <nav id="sidebar">
             <div class="p-4">
-                <img src="{{ asset('Image/imageBanner8.jpg') }}" alt="Logo" class="logo bg-light"
-                    style="width: 100%">
+                <img src="{{ asset('Image/output-onlinepngtools.png') }}" alt="Logo" class="logo">
                 <ul class="list-unstyled components mb-5">
-                    @if ($role === 'Employee')
-                        <li>
-                            <a href="{{ url('/home') }}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/incidentReport') }}">Incident Report</a>
-                        </li>
-                        <li>
-                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                                class="dropdown-toggle">Generate Report</a>
-                            <ul class="collapse list-unstyled" id="pageSubmenu">
-                                <li>
-                                    <a href="{{ url('/report') }}">Summary Report</a>
-                                </li>
-                                <li>
-                                    <a href="#">Detailed Report</a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                    @if ($role === 'Team Leader')
-                        <li class="active">
-                            <a href="{{ url('/home') }}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/incidentReport') }}">Incident Report</a>
-                        </li>
-                        <li>
-                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                                class="dropdown-toggle">Generate Report</a>
-                            <ul class="collapse list-unstyled" id="pageSubmenu">
-                                <li>
-                                    <a href="{{ url('/report') }}">Summary Report</a>
-                                </li>
-                                <li>
-                                    <a href="#">Detailed Report</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ url('/inventory') }}">Inventory</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/inventoryRequest') }}">Inventory Request</a>
-                        </li>
-                    @endif
-                    @if ($role === 'Admin')
-                        <li class="active">
-                            <a href="{{ url('/home') }}">Home</a>
-                        </li>
-                        <li>
-                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                                class="dropdown-toggle">Generate Report</a>
-                            <ul class="collapse list-unstyled" id="pageSubmenu">
-                                <li>
-                                    <a href="{{ url('/report') }}">Summary Report</a>
-                                </li>
-                                <li>
-                                    <a href="#">Detailed Report</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ url('/register') }}">Register New User</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/users') }}">Users</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/adminInventory') }}">Inventory</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/adminInventoryRequest') }}">Inventory Request</a>
-                        </li>
-                    @endif
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle" href="#profileLogOut" data-toggle="collapse" aria-expanded="false">
+                    @switch($role)
+                        @case('Employee')
+                            <li>
+                                <a href="{{ url('/home') }}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/incidentReport') }}">Fire Incident Reports</a>
+                            </li>
+                            <li>
+                                <a href="#reportSubMenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Generate Reports</a>
+                                <ul class="collapse list-unstyled" id="reportSubMenu">
+                                    <li>
+                                        <a href="{{ url('/summaryReport') }}">Summary Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/detailedReport') }}">Detailed Report</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @break
+
+                        @case('Team Leader')
+                            <li>
+                                <a href="{{ url('/home') }}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/incidentReport') }}">Fire Incident Reports</a>
+                            </li>
+                            <li>
+                                <a href="#reportSubMenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Generate Reports</a>
+                                <ul class="collapse list-unstyled" id="reportSubMenu">
+                                    <li>
+                                        <a href="{{ url('/summaryReport') }}">Summary Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/detailedReport') }}">Detailed Report</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ url('/inventory') }}">Inventory</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/inventoryRequest') }}">Inventory Request</a>
+                            </li>
+                        @break
+
+                        @case('Admin')
+                            <li>
+                                <a href="{{ url('/home') }}">Home</a>
+                            </li>
+                            <li>
+                                <a href="#reportSubMenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Generate Reports</a>
+                                <ul class="collapse list-unstyled" id="reportSubMenu">
+                                    <li>
+                                        <a href="{{ url('/summaryReport') }}">Summary Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/detailedReport') }}">Detailed Report</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ url('/register') }}">Register New User</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/users') }}">List of Users</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/adminInventory') }}">Inventory Management</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/adminInventoryRequest') }}">Inventory Requests</a>
+                            </li>
+                        @break
+
+                        @default
+                    @endswitch
+                    <li>
+                        <a href="#userSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             {{ Auth::user()->name }}
                         </a>
-
-                        <ul class="collapse list-unstyled" id="profileLogOut">
+                        <ul class="collapse list-unstyled" id="userSubMenu">
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -149,7 +133,6 @@
                                     @csrf
                                 </form>
                             </li>
-
                         </ul>
                     </li>
                 </ul>
@@ -174,8 +157,8 @@
                         </div>
                         <div class="col-1">
                             <a href="https://www.facebook.com/barangaylowerbicutan"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-instagram" viewBox="0 0 16 16">
                                     <path
                                         d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
                                 </svg></a>
@@ -191,7 +174,18 @@
                         <p class="ml-3">Address: C-6, Lower Bicutan, Taguig, 1632 Metro Manila</p>
                         <p class="ml-3">Telephone Number: 284-786-640</p>
                     </div>
-                    <br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br>
+                    @switch($role)
+                        @case('Employee')
+                            <br><br><br><br><br><br>
+                        @break
+
+                        @case('Team Leader')
+                            <br><br>
+                        @break
+
+                        @default
+                    @endswitch
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
@@ -207,25 +201,15 @@
         </nav>
 
         <!-- Page Content  -->
-        <main class="py-4 w-100">
+        <main class="p-4 w-100">
             @yield('content')
         </main>
     </div>
 
-    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script> --}}
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/popper.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

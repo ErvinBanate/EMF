@@ -5,18 +5,16 @@ namespace App\Http\Controllers;
 use App\Exports\IncidentReportExport;
 use App\Exports\PendingIncidentReportExport;
 use App\Exports\RejectedIncidentReportExport;
-use App\Http\Requests\CreateIncidentReportRequest;
 use App\Http\Requests\CreateNewReportRequest;
 use App\Models\IncidentReport;
+use App\Models\Inventory;
 use App\Models\InventoryRequest;
 use App\Services\IncidentReport\IncidentReportService;
 use App\Services\Inventory\InventoryService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Carbon\Carbon;
 
 class incidentReportController extends Controller
@@ -38,10 +36,25 @@ class incidentReportController extends Controller
         'Task Force India',
         'General Alarm',
     ];
+    private $months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
 
-    public function __construct(IncidentReportService $incidentReportService, InventoryService $inventoryService) {
+    public function __construct(IncidentReportService $incidentReportService, InventoryService $inventoryService, Inventory $inventory) {
         $this->incidentReportService = $incidentReportService;
         $this->inventoryService = $inventoryService;
+        $this->inventory = $inventory;
     }
      
     public function create()
@@ -52,6 +65,7 @@ class incidentReportController extends Controller
             'fireAlarmLevels' => $this->fireAlarmLevels,
             'role' => $role,
             'action' => 'create',
+            'months' => $this->months,
         ]);
     }
 
@@ -72,6 +86,7 @@ class incidentReportController extends Controller
             'report' => $incident_report,
             'fireAlarmLevels' => $this->fireAlarmLevels,
             'role' => $role,
+            'months' => $this->months,
             'action' => 'edit',
         ]);
     }
@@ -113,6 +128,15 @@ class incidentReportController extends Controller
         return view('employeeFolder.report', $this->incidentReportService->getReports());
     }
 
+    public function detailedReport()
+    {
+        $role = Auth::user()->role->role_name;
+        return view('employeeFolder.detailedReport', [
+            'reports' => $this->incidentReportService->getAll(),
+            'role' => $role,
+        ]);
+    }
+
     public function store(CreateNewReportRequest $request)
     {
         $this->incidentReportService->create($request->validated());
@@ -130,7 +154,7 @@ class incidentReportController extends Controller
         ]);
     }
 
-    public function update(Request $request, IncidentReport $incident_report)
+    public function update(CreateNewReportRequest $request, IncidentReport $incident_report)
     {
         $this->incidentReportService->update($request, $incident_report);
 
@@ -147,6 +171,7 @@ class incidentReportController extends Controller
     public function approve(IncidentReport $incident_report)
     {
         $data = ['is_approved' => true];
+        // dd('approving');
 
         $incident_report->update($data);
 
@@ -156,6 +181,7 @@ class incidentReportController extends Controller
     public function reject(IncidentReport $incident_report)
     {
         $data = ['is_rejected' => true];
+        // dd('rejecting');
 
         $incident_report->update($data);
 
@@ -251,6 +277,15 @@ class incidentReportController extends Controller
     public function approveRequest(InventoryRequest $product_request)
     {
         $data = ['is_approved' => 1];
+        $product = $this->inventory->where(['product_name' => $product_request->product_name, 'deleted_at' => null])->first();
+        // dd($product);
+        if ($product === null) {
+            $this->inventoryService->createNewProudctByRequest($product_request);
+        }
+        else {
+            $this->inventoryService->addStockByRequest($product_request->product_name, $product_request->stock);
+        }
+        
         $product_request->update($data);
 
         return redirect()->route('adminInventoryRequest');
