@@ -1,0 +1,39 @@
+.div-background {
+    background-image: url('../Image/logInPage.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.light-transparent-log-in {
+    background-color: rgba(236, 236, 236, 0.925);
+    height: 100vh;
+}
+.light-transparent-sign-in {
+    background-color: rgba(236, 236, 236, 0.925);
+    height: 89vh;
+}
+.table-fixed tbody {
+    display: block;
+    max-height: 65vh;
+    overflow-y: scroll;
+}
+.table-fixed thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+.table-fixed thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+.recent-reports tbody {
+    display: block;
+    max-height: 60vh;
+    overflow-y: scroll;
+}
+.recent-reports thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+.recent-reports thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}

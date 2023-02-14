@@ -28,17 +28,30 @@ class adminController extends Controller
         ]);
     }
 
+    public function account()
+    {
+        $role = Auth::user()->role->role_name;
+        return view('employeeFolder.account', [
+            'users' => User::all(),
+            'role' => $role,
+        ]);
+    }
+
     public function editUser(User $user)
     {
+        $role = Auth::user()->role->role_name;
         return view('employeeFolder.editUser', [
             'user' => $user,
+            'role' => $role,
             'roles' => Role::all(),
         ]);
     }
 
     public function changePassword(User $user)
     {
+        $role = Auth::user()->role->role_name;
         return view('employeeFolder.changePassword', [
+            'role' => $role,
             'user' => $user,
         ]);
     }
@@ -51,7 +64,7 @@ class adminController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users');
+        return redirect()->route('account');
     }
 
     public function updateUser(User $user, Request $request)
@@ -59,12 +72,11 @@ class adminController extends Controller
         $data = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'role_id' => $request->input('role_id'),
         ];
 
         $user->update($data);
 
-        return redirect()->route('users');
+        return redirect()->route('account');
     }
 
     public function createProduct(Request $request)
@@ -93,10 +105,5 @@ class adminController extends Controller
         $inventory_product->delete();
 
         return redirect()->route('adminInventory');
-    }
-
-    public function adminInventoryRequest()
-    {
-        
     }
 }

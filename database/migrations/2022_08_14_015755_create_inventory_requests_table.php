@@ -19,8 +19,10 @@ class CreateInventoryRequestsTable extends Migration
             $table->integer('stock');
             $table->string('product_type');
             $table->string('requested_by');
-            $table->boolean('is_approved');
-            $table->boolean('is_rejected');
+            $table->date('aquired_date');
+            $table->date('expiration_date');
+            $table->boolean('is_approved')->default(0);
+            $table->boolean('is_rejected')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

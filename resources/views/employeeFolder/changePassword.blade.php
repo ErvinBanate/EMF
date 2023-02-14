@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="pagetitle">
@@ -6,8 +6,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                <li class="breadcrumb-item active"><a href="{{ url('/users') }}">List of Users</a></li>
-                <li class="breadcrumb-item active">Change User Password</li>
+                <li class="breadcrumb-item"><a href="{{ url('/account') }}">Account</a></li>
+                <li class="breadcrumb-item active">Change Passwords</li>
             </ol>
         </nav>
     </div>

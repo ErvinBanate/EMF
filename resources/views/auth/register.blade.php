@@ -52,7 +52,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            {{-- <div class="row mb-3">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -77,7 +77,7 @@
                                     <input id="password-confirm" type="password" class="form-control"
                                         name="password_confirmation" required autocomplete="new-password">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row mb-3">
                                 <label for="name"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>

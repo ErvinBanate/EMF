@@ -16,6 +16,8 @@ class InventoryRequest extends Model
         'stock',
         'product_type',
         'requested_by',
+        'aquired_date',
+        'expiration_date',
         'is_approved',
         'is_rejected',
     ];

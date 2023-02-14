@@ -14,10 +14,10 @@
     <div class="row justify-content-center">
         <div class="col-md-12 pt-3 bg-light shadow">
             <h1 class='text-center'>Fire Incident Reports</h1>
-            <table class="table table-bordered table-hover overflowTable">
+            <table class="table table-bordered table-hover table-fixed">
                 <thead class="thead-dark">
                     <th class='text-center'>Baranggay</th>
-                    <th class='text-center'>Date</th>
+                    <th class='text-center'>Date of Incident</th>
                     <th class='text-center'>Fire Alarm Level</th>
                     <th class='text-center'>Cause of Incident</th>
                     <th class='text-center'>Estimated Damage</th>
@@ -29,7 +29,9 @@
                     @foreach ($reports as $report)
                         <tr>
                             <td class='text-center'>{{ $report['baranggay'] }}</td>
-                            <td class='text-center'>{{ $report['month'] }} {{ $report['day'] }}, {{ $report['year'] }}</td>
+                            <td class='text-center'>{{ $report['start_month'] }} {{ $report['start_day'] }},
+                                {{ $report['start_year'] }}
+                            </td>
                             <td class='text-center'>{{ $report['fire_alarm_level'] }}</td>
                             <td class='text-center'>{{ $report['cause_of_incident'] }}</td>
                             <td class='text-center'>&#8369;{{ number_format($report['estimated_damage']) }}

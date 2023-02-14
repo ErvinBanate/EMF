@@ -12,7 +12,7 @@
     </div>
     <div class="my-4">
         <div class="row justify-content-center p-4 bg-light shadow">
-            <table class="table table-bordered table-hover overflowTable">
+            <table class="table table-bordered table-hover table-fixed">
                 <thead class="thead-dark">
                     <th>Product</th>
                     <th>Total Stock</th>

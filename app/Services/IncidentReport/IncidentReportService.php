@@ -74,6 +74,11 @@ class IncidentReportService
                     ->where(['is_approved' => 1, 'is_rejected' => 0])->get()->sortByDesc('created_at');
         }
     }
+
+    public function getPendingEmployee() {
+        return $this->incidentReport->with('reportedBy')
+                    ->where(['reported_by' => Auth::user()->id, 'is_approved' => 0, 'is_rejected' => 0])->get()->sortByDesc('created_at');
+    }
     
     public function countAll()
     {
@@ -102,6 +107,18 @@ class IncidentReportService
     {
         return $this->incidentReport->select('cause_of_incident', DB::raw('count(*) as total'))
                 ->groupBy('cause_of_incident')->orderBy('total', 'DESC')->take(3)->get();
+    }
+
+    public function topBaranggay()
+    {
+        return $this->incidentReport->select('baranggay', DB::raw('count(*) as total'))
+                ->groupBy('baranggay')->orderBy('total', 'DESC')->take(3)->get();
+    }
+
+    public function topMonth()
+    {
+        return $this->incidentReport->select('start_month', DB::raw('count(*) as total'))
+                ->groupBy('start_month')->orderBy('total', 'DESC')->take(5)->get();
     }
 
     public function lowStreets()
@@ -158,13 +175,19 @@ class IncidentReportService
         // $imgBase64 = base64_encode($request['input-evidence']->extension());
         // dd(base64_decode($imgBase64));
         return [
-            'month' => $request['input-month'],
-            'day' => $request['input-day'],
-            'year' => $request['input-year'],
+            'start_month' => $request['input-start-month'],
+            'start_day' => $request['input-start-day'],
+            'start_year' => $request['input-start-year'],
+            'time_started' => $request['input-start-time'],
+            'end_month' => $request['input-end-month'],
+            'end_day' => $request['input-end-day'],
+            'end_year' => $request['input-end-year'],
+            'time_ended' => $request['input-end-time'],
             'fire_alarm_level' => $request['input-fire-alarm-level'],
             'cause_of_incident' => $request['input-cause-of-incident'],
             'estimated_damage' => $request['input-estimated-damage'],
             'reported_by' => $request['input-reported-by'],
+            'families_affected' => $request['input-families-affected'],
             'description' => $request['input-description'],
             'baranggay' => $request['input-baranggay'],
             'location' => $request['input-location'],

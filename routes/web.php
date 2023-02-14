@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncidentReportController;
 use App\Models\IncidentReport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VerifyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 })->name('logIn');
-
 Auth::routes();
-
-Route::middleware(['auth'])->group(function () {
+Route::get('/signIn', [IncidentReportController::class, 'signIn'])->name('signIn');
+Route::middleware(['auth'])->group(function () {   
     Route::post('/updateUser/{user}', [adminController::class, 'updateUser'])->name('updateUser');
     Route::post('/newPassword/{user}', [adminController::class, 'newPassword'])->name('newPassword');
 
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/adminInventoryRequest', [IncidentReportController::class, 'adminInventoryRequest'])->name('adminInventoryRequest');
     
     Route::get('/edit/{incident_report}', [IncidentReportController::class, 'edit'])->name('edit');
+    Route::get('/createIncidentReport', [IncidentReportController::class, 'createIncidentReport'])->name('createIncidentReport');
     Route::get('/remove/{incident_report}', [IncidentReportController::class, 'destroy'])->name('remove');
     Route::get('/show/{incident_report}', [IncidentReportController::class, 'show'])->name('show');
     Route::get('/confirmData/{incident_report}', [IncidentReportController::class, 'confirmData'])->name('confirmData');
@@ -52,8 +54,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [IncidentReportController::class, 'index']);
     Route::get('/users', [adminController::class, 'showUsers'])->name('users');
     Route::get('/incidentReport', [IncidentReportController::class, 'create'])->name('create');
+    Route::get('/teamLeadCreate', [IncidentReportController::class, 'teamLeadCreate'])->name('teamLeadCreate');
     Route::get('/inventory', [IncidentReportController::class, 'inventory'])->name('inventory');
     Route::get('/adminInventory', [IncidentReportController::class, 'adminInventory'])->name('adminInventory');
+    Route::get('/viewItemList/{product}', [IncidentReportController::class, 'viewItemList'])->name('viewItemList');
     Route::get('/summaryReport', [IncidentReportController::class, 'report'])->name('report');
     Route::get('/detailedReport', [IncidentReportController::class, 'detailedReport'])->name('detailedReport');
     Route::get('/downloadApprovedReports', [IncidentReportController::class, 'downloadApprovedReports'])->name('downloadApprovedReports');
@@ -64,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/downloadRejectedPdf', [IncidentReportController::class, 'downloadRejectedPdf'])->name('downloadRejectedPdf');
     Route::get('/downloadReportPdf/{incident_report}', [IncidentReportController::class, 'downloadReportPdf'])->name('downloadReportPdf');
     Route::get('/inventoryRequest', [IncidentReportController::class, 'inventoryRequest'])->name('inventoryRequest');
+    Route::get('/account', [adminController::class, 'account'])->name('account');
     Route::get('/editUser/{user}', [adminController::class, 'editUser'])->name('editUser');
     Route::get('/changePassword/{user}', [adminController::class, 'changePassword'])->name('changePassword');
 });

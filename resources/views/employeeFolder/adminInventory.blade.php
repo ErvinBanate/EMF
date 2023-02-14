@@ -17,22 +17,33 @@
                         <form class="g-3" action="{{ route('createProduct') }}" method="POST">
                             @csrf
                             <div class="row modal-body">
-                                <div class="col-md-5">
-                                    <label class="form-label" for="input-new-product">Product</label>
-                                    <input class="form-control" type="text" name="input-new-product">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="input-new-product">Item</label>
+                                    <input class="form-control" type="text" name="input-new-product" autocomplete="off">
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label" for="input-new-quantity">Quantity</label>
-                                    <input class="form-control" type="text" name="input-new-quantity">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="input-new-accounted">Accounted Person</label>
+                                    <input class="form-control" type="text" name="input-new-accounted"
+                                        autocomplete="off">
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label" for="input-new-product-type">Product Type</label>
+                                    <label class="form-label" for="input-new-quantity">Quantity</label>
+                                    <input class="form-control" type="number" name="input-new-quantity" min="1">
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label" for="input-new-product-type">Item Type</label>
                                     <select class="form-control" name="input-new-product-type">
                                         <option value="Fire Service Vehicles">Fire Service Vehicles</option>
-                                        <option value="Firefigther Tools">Firefigther Tools</option>
-                                        <option value="Wildfire Suppression Equipment">Wildfire Suppression Equipment
-                                        </option>
+                                        <option value="Firefigther Tools">Firefighter Tools</option>
                                     </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label" for="input-new-acquired">Acquired Date</label>
+                                    <input class="form-control" type="date" name="input-new-acquired">
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label" for="input-new-expiration">Expiration Date</label>
+                                    <input class="form-control" type="date" name="input-new-expiration">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -60,7 +71,7 @@
                         <form class="g-3" action="{{ route('addStock') }}" method="POST">
                             @csrf
                             <div class="row modal-body">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <label class="form-label" for="input-add-product">Product Name</label>
                                     <select class="form-control" type="text" name="input-add-product">
                                         @foreach ($products as $product)
@@ -70,9 +81,22 @@
                                     </select>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label class="form-label" for="input-add-accounted">Accounted Person</label>
+                                    <input class="form-control" type="text" name="input-add-accounted"
+                                        autocomplete="off">
+                                </div>
                                 <div class="col-md-4">
                                     <label class="form-label" for="input-add-quantity">Quantity</label>
-                                    <input class="form-control" type="text" name="input-add-quantity">
+                                    <input class="form-control" type="number" name="input-add-quantity" min="1">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="input-add-acquired">Acquired Date</label>
+                                    <input class="form-control" type="date" name="input-add-acquired">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="input-add-expiration">Expiration Date</label>
+                                    <input class="form-control" type="date" name="input-add-expiration">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -85,12 +109,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="removeStockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    {{-- <div class="modal fade" id="removeStockModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Remove Product Stock</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Remove Item Stock</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -101,7 +125,7 @@
                             @csrf
                             <div class="row modal-body">
                                 <div class="col-md-8">
-                                    <label class="form-label" for="input-remove-product">Product Name</label>
+                                    <label class="form-label" for="input-remove-product">Item Name</label>
                                     <select class="form-control" type="text" name="input-remove-product">
                                         @foreach ($products as $product)
                                             <option value="{{ $product->product_name }}">{{ $product->product_name }}
@@ -124,7 +148,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="pagetitle">
         <h3>Inventory Management</h3>
@@ -141,13 +165,10 @@
             <div class="row">
                 <div class="col-md-6">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newProductModal">
-                        New Product
+                        New Item
                     </button>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStockModal">
                         Add Stock
-                    </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#removeStockModal">
-                        Remove Stock
                     </button>
                 </div>
             </div>
@@ -156,13 +177,13 @@
 
     <div class="bg-light px-5">
         <div class="row justify-content-center">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover table-fixed">
                 <thead class="thead-dark">
-                    <th>Product</th>
+                    <th>Item</th>
                     <th>Total Stock</th>
                     <th>Working Stock</th>
                     <th>Not Working Stock</th>
-                    <th>Product Type</th>
+                    <th>Item Type</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -173,14 +194,8 @@
                             <td>{{ number_format($product->working_stock) }}</td>
                             <td>{{ number_format($product->not_working_stock) }}</td>
                             <td>{{ $product->product_type }}</td>
-                            <td class="text-center" style="width: 5%"><a
-                                    href="{{ route('removeProduct', $product->id) }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                        class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                                    </svg>
-                                </a>
+                            <td class="text-center"><a href="{{ route('viewItemList', $product->id) }}">
+                                    <button class="btn btn-primary">View</button></a>
                             </td>
                         </tr>
                     @endforeach

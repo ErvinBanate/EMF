@@ -14,15 +14,15 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap/min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -37,6 +37,8 @@
 <body>
     <div class="content">
         <main class="py-4">
+            <header style="text-align: right; background-color:maroon; color:white; padding-right:1vh">
+                {{ Auth::user()->name }} ({{ $role }})</header>
             @yield('content')
         </main>
     </div>

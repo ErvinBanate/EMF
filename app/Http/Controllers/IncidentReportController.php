@@ -20,6 +20,7 @@ use Carbon\Carbon;
 class incidentReportController extends Controller
 {
     private $incidentReportService;
+    private $inventoryService;
     private $inventory;
     private $fireAlarmLevels = [
         'First Alarm',
@@ -56,11 +57,38 @@ class incidentReportController extends Controller
         $this->inventoryService = $inventoryService;
         $this->inventory = $inventory;
     }
+
+    public function signIn() {
+        return view('auth.sign-in');
+    }
      
     public function create()
     {
         $role = Auth::user()->role->role_name;
         return view('employeeFolder.create', [
+            'reports' => $this->incidentReportService->getIncidentReports($role),
+            'fireAlarmLevels' => $this->fireAlarmLevels,
+            'role' => $role,
+            'action' => 'create',
+            'months' => $this->months,
+        ]);
+    }
+
+    public function createIncidentReport()
+    {
+        $role = Auth::user()->role->role_name;
+        return view('employeeFolder.createIncidentReport', [
+            'fireAlarmLevels' => $this->fireAlarmLevels,
+            'role' => $role,
+            'action' => 'create',
+            'months' => $this->months,
+        ]);
+    }
+
+    public function teamLeadCreate()
+    {
+        $role = Auth::user()->role->role_name;
+        return view('employeeFolder.teamLeaderCreate', [
             'reports' => $this->incidentReportService->getIncidentReports($role),
             'fireAlarmLevels' => $this->fireAlarmLevels,
             'role' => $role,
@@ -95,10 +123,12 @@ class incidentReportController extends Controller
     {
         $role = Auth::user()->role->role_name;
         return view('employeeFolder.home', [
-            'reports' => $this->incidentReportService->getAll(),
+            'reportsEmployee' => $this->incidentReportService->getPendingEmployee(),
+            'reportsTeamLeader' => $this->incidentReportService->getPending(),
+            'reportsAdmin' => $this->incidentReportService->getIncidentReports($role),
             'role' => $role,
-            'topCOI' => $this->incidentReportService->topCOI(),
-            'lowStreets' => $this->incidentReportService->lowStreets(),
+            'baranggays' => $this->incidentReportService->topBaranggay(),
+            'months' => $this->incidentReportService->topMonth(),
         ]);
     }
 
@@ -117,7 +147,7 @@ class incidentReportController extends Controller
         $role = Auth::user()->role->role_name;
 
         return view('employeeFolder.inventoryRequest', [
-            'requestProducts' => $this->inventoryService->getAllRequests(),
+            'requestProducts' => $this->inventoryService->getAllRequestProducts(),
             'products' => $this->inventoryService->getAllProducts(),
             'role' => $role,
         ]);
@@ -269,7 +299,7 @@ class incidentReportController extends Controller
         $role = Auth::user()->role->role_name;
 
         return view('employeeFolder.adminInventoryRequest', [
-            'requestProducts' => $this->inventoryService->getAllRequests(),
+            'requestProducts' => $this->inventoryService->getAllRequestProducts(),
             'role' => $role,
         ]);
     }
@@ -283,7 +313,7 @@ class incidentReportController extends Controller
             $this->inventoryService->createNewProudctByRequest($product_request);
         }
         else {
-            $this->inventoryService->addStockByRequest($product_request->product_name, $product_request->stock);
+            $this->inventoryService->addStockByRequest($product_request);
         }
         
         $product_request->update($data);
@@ -297,5 +327,15 @@ class incidentReportController extends Controller
         $product_request->update($data);
 
         return redirect()->route('adminInventoryRequest');
+    }
+
+    public function viewItemList(Inventory $product) {
+        $role = Auth::user()->role->role_name;
+
+        return view('employeeFolder.viewItemList', [
+            'role' => $role,
+            'productAcronym' => $product->item_acronym,
+            'itemList' => $this->inventoryService->getAllItemList(),
+        ]);
     }
 }

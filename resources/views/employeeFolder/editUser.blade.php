@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="pagetitle">
@@ -6,7 +6,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                <li class="breadcrumb-item active"><a href="{{ url('/users') }}">List of Users</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/account') }}">Account</a></li>
                 <li class="breadcrumb-item active">Edit User</li>
             </ol>
         </nav>
@@ -59,17 +59,7 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="role" class="form-control @error('role') is-invalid @enderror"
-                                        name="role_id" value="{{ $user->role->role_name }}" required autofocus>
-                                        @foreach ($roles as $role)
-                                            @if ($role->role_name === $user->role->role_name)
-                                                <option value="{{ $role->id }}" selected>{{ $role->role_name }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                    <p class="form-control">{{ $user->role->role_name }}</p>
 
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">

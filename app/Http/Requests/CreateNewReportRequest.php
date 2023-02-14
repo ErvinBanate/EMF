@@ -24,9 +24,15 @@ class CreateNewReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'input-month' => 'required | string',
-            'input-day' => 'required | integer',
-            'input-year' => 'required | integer',
+            'input-start-month' => 'required | string',
+            'input-start-day' => 'required | integer',
+            'input-start-year' => 'required | integer',
+            'input-start-time' => 'required | string',
+            'input-end-month' => 'required | string',
+            'input-end-day' => 'required | integer',
+            'input-end-year' => 'required | integer',
+            'input-end-time' => 'required | string',
+            'input-families-affected' => 'required | integer',
             'input-fire-alarm-level' => 'required | string',
             'input-cause-of-incident' => 'required | string',
             'input-estimated-damage' => 'required | integer',

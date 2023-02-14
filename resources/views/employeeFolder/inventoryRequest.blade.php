@@ -17,22 +17,31 @@
                         <form class="g-3" action="{{ route('createNewProductRequest') }}" method="POST">
                             @csrf
                             <div class="row modal-body">
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <label class="form-label" for="input-new-product">Product</label>
                                     <input class="form-control" type="text" name="input-product">
                                     <input class="form-control" type="hidden" name="input-requested-by"
                                         value="{{ Auth::user()->name }}">
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label" for="input-new-quantity">Quantity</label>
-                                    <input class="form-control" type="text" name="input-quantity">
-                                </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-6">
                                     <label class="form-label" for="input-new-product-type">Product Type</label>
                                     <select class="form-control" name="input-product-type">
-                                        <option value="Equipment">Equipment</option>
-                                        <option value="Consumables">Consumables</option>
+                                        <option value="Fire Service Vehicles">Fire Service Vehicles</option>
+                                        <option value="Firefigther Tools">Firefigther Tools</option>
                                     </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="input-new-quantity">Quantity</label>
+                                    <input class="form-control" type="number" name="input-quantity" min="1">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="input-new-acquired">Acquired Date</label>
+                                    <input class="form-control" type="date" name="input-aquired">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="input-new-expiration">Expiration Date</label>
+                                    <input class="form-control" type="date" name="input-expiration">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -63,7 +72,7 @@
             </button>
         </div>
         <div class="row justify-content-center">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover table-fixed">
                 <thead class="thead-dark">
                     <th>Product</th>
                     <th>Stock</th>
@@ -79,14 +88,8 @@
                                 <td>{{ number_format($requestProduct->stock) }}</td>
                                 <td>{{ $requestProduct->product_type }}</td>
                                 <td>{{ $requestProduct->requested_by }}</td>
-                                <td class="text-center" style="width: 5%"><a
-                                        href="{{ route('removeRequest', $requestProduct->id) }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                            class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                                        </svg>
-                                    </a>
+                                <td class="text-center"><a href="{{ route('removeRequest', $requestProduct->id) }}">
+                                        <button class="btn btn-primary">Remove</button></a>
                                 </td>
                             </tr>
                         @endif
