@@ -49,7 +49,8 @@
                     <div style="max-height: 68vh; overflow: auto; display: inline-block; width: 100%">
                         @foreach ($reportsTeamLeader as $report)
                             <div class="p-2 mb-3 bg-light" style="border-left: 3px solid maroon">
-                                <h3>{{ $report['baranggay'] }}, {{ $report['month'] }} {{ $report['day'] }}, {{ $report['year'] }}
+                                <h3>{{ $report['baranggay'] }}, {{ $report['start_month'] }} {{ $report['start_day'] }},
+                                    {{ $report['start_year'] }}
                                 </h3>
                                 <p class="text-dark">Report by: {{ $report->reportedBy->name }}, Created At:
                                     {{ $report['created_at'] }}</p>
@@ -71,8 +72,8 @@
                         @foreach ($reportsEmployee as $report)
                             @if ($report->is_approved == 0 && $report->is_rejected == 0)
                                 <div class="p-2 mb-3 bg-light" style="border-left: 3px solid maroon">
-                                    <h3>{{ $report['baranggay'] }}, {{ $report['month'] }} {{ $report['day'] }},
-                                        {{ $report['year'] }}
+                                    <h3>{{ $report['baranggay'] }}, {{ $report['start_month'] }} {{ $report['start_day'] }},
+                                        {{ $report['start_year'] }}
                                     </h3>
                                     <p class="text-dark">Report by: {{ $report->reportedBy->name }}, Created At:
                                         {{ $report['created_at'] }}</p>
@@ -95,8 +96,8 @@
                     <div style="max-height: 68vh; overflow: auto; display: inline-block; width: 100%">
                         @foreach ($reportsAdmin as $report)
                             <div class="p-2 mb-3 bg-light" style="border-left: 3px solid maroon">
-                                <h3>{{ $report['baranggay'] }}, {{ $report['month'] }} {{ $report['day'] }},
-                                    {{ $report['year'] }}
+                                <h3>{{ $report['baranggay'] }}, {{ $report['start_month'] }} {{ $report['start_day'] }},
+                                    {{ $report['start_year'] }}
                                 </h3>
                                 <p class="text-dark">Report by: {{ $report->reportedBy->name }}, Created At:
                                     {{ $report['created_at'] }}</p>
@@ -127,7 +128,9 @@
                 new Chart(displayMonth, {
                     type: 'line',
                     data: {
-                        labels: [month[0].month, month[1].month, month[2].month, month[3].month, month[4].month],
+                        labels: [month[0].start_month, month[1].start_month, month[2].start_month, month[3].start_month,
+                            month[4].start_month
+                        ],
                         datasets: [{
                             label: 'Top 5 Months with Fire Incident Cases',
                             data: [month[0].total, month[1].total, month[2].total, month[3].total, month[4]
