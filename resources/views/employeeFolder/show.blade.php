@@ -84,7 +84,7 @@
                     <p class="form-control">{{ $report->baranggay }}</p>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label" for="input-location">Exact Location</label>
+                    <label class="form-label" for="input-location">Exact Location of Fire Incident</label>
                     <p class="form-control">{{ $report->location }}</p>
                 </div>
                 <div class="col-md-2">
@@ -129,7 +129,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="input-estimated-damage">Estimated Damage</label>
-                    <p class="form-control">{{ $report->estimated_damage }}</p>
+                    <p class="form-control">&#8369;{{ number_format($report->estimated_damage) }}</p>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label" for="input-reported-by">Reported By</label>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-label" for="input-families-affected">Number of Families Affected</label>
-                    <p class="form-control">{{ $report->reportedBy->name }}</p>
+                    <p class="form-control">{{ $report->families_affected }}</p>
                 </div>
                 <div class="col-md-12" style="height: 200px">
                     <label class="form-label" for="input-description">Description</label>

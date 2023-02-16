@@ -23,6 +23,7 @@ class incidentReportController extends Controller
     private $inventoryService;
     private $inventory;
     private $fireAlarmLevels = [
+        'False Alarm',
         'First Alarm',
         'Second Alarm',
         'Third Alarm',

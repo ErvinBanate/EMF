@@ -7,7 +7,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add New Inventory Request</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add New Item Request</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -56,11 +56,11 @@
     </div>
 
     <div class="pagetitle">
-        <h3>Inventory Request</h3>
+        <h3>Item Request</h3>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                <li class="breadcrumb-item active">Inventory Request</li>
+                <li class="breadcrumb-item active">Item Request</li>
             </ol>
         </nav>
     </div>

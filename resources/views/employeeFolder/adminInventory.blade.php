@@ -7,7 +7,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add New Product</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add New Item</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -18,7 +18,7 @@
                             @csrf
                             <div class="row modal-body">
                                 <div class="col-md-6">
-                                    <label class="form-label" for="input-new-product">Item</label>
+                                    <label class="form-label" for="input-new-product">Item Name</label>
                                     <input class="form-control" type="text" name="input-new-product" autocomplete="off">
                                 </div>
                                 <div class="col-md-6">
@@ -48,7 +48,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit">Create Product</button>
+                                <button class="btn btn-primary" type="submit">Create Item</button>
                             </div>
                         </form>
                     </div>
@@ -61,7 +61,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add Product Stock</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add Item Stock</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -72,7 +72,7 @@
                             @csrf
                             <div class="row modal-body">
                                 <div class="col-md-6">
-                                    <label class="form-label" for="input-add-product">Product Name</label>
+                                    <label class="form-label" for="input-add-product">Item Name</label>
                                     <select class="form-control" type="text" name="input-add-product">
                                         @foreach ($products as $product)
                                             <option value="{{ $product->product_name }}">{{ $product->product_name }}

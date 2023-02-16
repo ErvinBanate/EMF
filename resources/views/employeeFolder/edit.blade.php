@@ -20,7 +20,7 @@
                     <input class="form-control" type="text" name="input-baranggay" value="{{ $report->baranggay }}">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label" for="input-location">Exact Location</label>
+                    <label class="form-label" for="input-location">Exact Location of Fire Incident</label>
                     <input class="form-control" type="text" name="input-location" value="{{ $report->location }}">
                 </div>
                 <div class="col-md-2">

@@ -148,16 +148,8 @@ class InventoryService
     public function createNewProductRequest(Request $request)
     {
         $parseData = $this->parseNewProductRequest($request);
-        $items = $this->getAllRequestProducts();
-        $present = 0;
-        foreach ($items as $item) {
-            if ($item->product_name == $parseData['product_name']) {
-                $present = 1;
-            }
-        }
-        if ($present == 0) {
-            $this->inventoryRequest->create($parseData);
-        }
+        
+        $this->inventoryRequest->create($parseData);
     }
 
     public function addStockByRequest($request)

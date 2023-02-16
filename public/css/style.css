@@ -8254,7 +8254,8 @@ h1, h2, h3, h4, h5,
         margin-left: 0; } }
 
 a[data-toggle="collapse"] {
-  position: relative; }
+  position: relative; 
+}
 
 .dropdown-toggle::after {
   display: block;
@@ -8263,7 +8264,8 @@ a[data-toggle="collapse"] {
   right: 0;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
-  transform: translateY(-50%); }
+  transform: translateY(-50%); 
+}
 
 @media (max-width: 991.98px) {
   #sidebarCollapse span {

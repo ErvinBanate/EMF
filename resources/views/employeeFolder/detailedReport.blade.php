@@ -27,29 +27,23 @@
                 </thead>
                 <tbody>
                     @foreach ($reports as $report)
-                        <tr>
-                            <td class='text-center'>{{ $report['baranggay'] }}</td>
-                            <td class='text-center'>{{ $report['start_month'] }} {{ $report['start_day'] }},
-                                {{ $report['start_year'] }}
-                            </td>
-                            <td class='text-center'>{{ $report['fire_alarm_level'] }}</td>
-                            <td class='text-center'>{{ $report['cause_of_incident'] }}</td>
-                            <td class='text-center'>&#8369;{{ number_format($report['estimated_damage']) }}
-                            </td>
-                            <td class='text-center'>{{ $report->reportedBy->name }}</td>
-                            @if ($report['is_approved'] == 0 && $report['is_rejected'] == 0)
-                                <td class='text-center'>Pending</td>
-                            @elseif ($report['is_approved'] == 1 && $report['is_rejected'] == 0)
+                        @if ($report['is_approved'] == 1 && $report['is_rejected'] == 0)
+                            <tr>
+                                <td class='text-center'>{{ $report['baranggay'] }}</td>
+                                <td class='text-center'>{{ $report['start_month'] }} {{ $report['start_day'] }},
+                                    {{ $report['start_year'] }}
+                                </td>
+                                <td class='text-center'>{{ $report['fire_alarm_level'] }}</td>
+                                <td class='text-center'>{{ $report['cause_of_incident'] }}</td>
+                                <td class='text-center'>&#8369;{{ number_format($report['estimated_damage']) }}
+                                </td>
+                                <td class='text-center'>{{ $report->reportedBy->name }}</td>
                                 <td class='text-center'>Approved</td>
-                            @elseif ($report['is_approved'] == 0 && $report['is_rejected'] == 1)
-                                <td class='text-center'>Rejected</td>
-                            @else
-                                <td class='text-center'>Data Error</td>
-                            @endif
-                            <td class="text-center"><a href="{{ route('show', $report['id']) }}"><button
-                                        class="btn btn-primary">View</button></a>
-                            </td>
-                        </tr>
+                                <td class="text-center"><a href="{{ route('show', $report['id']) }}"><button
+                                            class="btn btn-primary">View</button></a>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
