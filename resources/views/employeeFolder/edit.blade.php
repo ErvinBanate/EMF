@@ -13,7 +13,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <form class="row g-3" method="POST" action="{{ route('update', $report->id) }}">
+            <form class="row g-3" method="POST" action="{{ route('update', $report->id) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-2">
                     <label class="form-label" for="input-baranggay">Baranggay</label>
@@ -174,7 +174,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label" for="input-reported-by">Reported By</label>
-                    <p class="form-control">{{ Auth::user()->name }}</p>
+                    <input class="form-control" type="text" value="{{ Auth::user()->name }}" disabled>
                     <input class="form-control" type="hidden" name="input-reported-by" value="{{ Auth::user()->id }}">
                 </div>
                 <div class="col-md-2">
@@ -183,14 +183,65 @@
                         value="{{ $report->families_affected }}">
                 </div>
                 <div class="col-md-12">
-                    <label class="form-label" for="input-description">Description</label>
-                    <textarea class="form-control" type="text" name="input-description" rows="6">{{ $report->description }}</textarea>
+                    <label class="form-label" for="input-description">Narative Report</label>
+                    <textarea class="form-control" type="text" name="input-description" rows="5" style="resize: none">{{ $report->description }}</textarea>
                 </div>
+                @if ($report->rejection_notes == null)
+                    <div class="col-md-12 justify-content-center mt-2">
+                        <div class="image-preview-container">
+                            <div class="preview">
+                                <img id="preview-selected-image" src="{{ asset('Image/' . $report->image) }}"
+                                    style="display: block;" />
+                            </div>
+                            <label for="file-upload">Upload Image</label>
+                            <input type="file" id="file-upload" name="input-image" onchange="previewImage(event);"
+                                accept="image/*">
+                            @error('input-image')
+                                <span class="invalidFeedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                @else
+                    <div class="col-md-6 justify-content-center mt-2">
+                        <div class="image-preview-container">
+                            <div class="preview">
+                                <img id="preview-selected-image" src="{{ asset('Image/' . $report->image) }}"
+                                    style="display: block;" />
+                            </div>
+                            <label for="file-upload">Upload Image</label>
+                            <input type="file" id="file-upload" name="input-image" onchange="previewImage(event);"
+                                accept="image/*">
+                            @error('input-image')
+                                <span class="invalidFeedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="height: 150px">
+                        <label class="form-label" for="input-description">Rejection Notes</label>
+                        <textarea class="form-control" type="text" name="input-description" style="height: 75%; resize: none" disabled>{{ $report->rejection_notes }}</textarea>
+                    </div>
+                @endif
                 <div class="col-12 mt-3">
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                     <button class="btn btn-primary" type="submit">Update</button>
                 </div>
             </form>
         </div>
     </div>
-    {{-- </div> --}}
+    <script>
+        const previewImage = (event) => {
+            const imageFiles = event.target.files;
+            const imageFilesLength = imageFiles.length;
+            if (imageFilesLength > 0) {
+                const imageSrc = URL.createObjectURL(imageFiles[0]);
+                const imagePreviewElement = document.querySelector("#preview-selected-image");
+                imagePreviewElement.src = imageSrc;
+                imagePreviewElement.style.display = "block";
+            }
+        };
+    </script>
 @endsection

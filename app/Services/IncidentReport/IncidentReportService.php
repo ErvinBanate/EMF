@@ -21,12 +21,67 @@ class IncidentReportService
 
     public function create($request): void
     {
-        $this->incidentReport->create($this->parseData($request));
+        $data = $this->parseData($request);
+        $imagePath = $request['input-image']->store('evidences', 'public');
+        $data += [
+            'image' => $imagePath,
+        ];
+
+        $this->incidentReport->create($data);
     }
 
     public function update($request, IncidentReport $incident_report): void
     {
-        $incident_report->update($this->parseData($request));
+
+        if (isset($request['input-image'])) {
+            // dd($request['input-image']);
+            $data = $this->parseData($request);
+            $imagePath = $request['input-image']->store('evidences', 'public');
+            $data += [
+                'image' => $imagePath,
+            ];
+            $incident_report->update($data);
+        }
+        else {
+            $incident_report->update($this->parseData($request));
+        }
+    }
+
+    public function approve(IncidentReport $incident_report) 
+    {
+        $data = ['is_approved' => true];
+        // dd('approving');
+
+        $incident_report->update($data);
+    }
+
+    public function reject($request, IncidentReport $incident_report) 
+    {
+        date_default_timezone_set("Asia/Manila");
+        $timestamp = date("F d, Y h:i:sa");
+        if ($incident_report->rejection_notes == null) {
+            $data = [
+                'rejection_notes' => $incident_report->rejection_notes . "\n \n" . $request['input-rejection-notes'] . " (" . $timestamp . ")",
+                'is_rejected' => true,
+            ];
+        }
+        else {
+            $data = [
+                'rejection_notes' => $request['input-rejection-notes'] . " " . $timestamp,
+                'is_rejected' => true,
+            ];
+        }
+
+        $incident_report->update($data);
+    }
+
+    public function searchReports($search, $category) {
+        $resultReport = array();
+        $searchStr = '%'.$search.'%';
+
+        $resultReport = $this->incidentReport->where($category,'LIKE',$searchStr)->get();
+
+        return $resultReport;
     }
 
     public function getAll() 
@@ -34,10 +89,42 @@ class IncidentReportService
         return $this->incidentReport->all()->sortByDesc('created_at');
     }
 
+    public function getMonthReports($month, $year)
+    {
+        return $this->incidentReport->where(['start_month' => $month, 'start_year' => $year, 'is_approved' => 1, 'is_rejected' => 0])
+                ->get()->sortBy('start_day');
+    }
+
+    public function getMonth($month, $year)
+    {
+        $reports = $this->getMonthReports($month, $year);
+
+        return [
+            'data' => $reports,
+            'total' => $reports->sum('estimated_damage'),
+        ];
+    }
+
+    public function getYearReports($year)
+    {
+        return $this->incidentReport->where(['start_year' => $year, 'is_approved' => 1, 'is_rejected' => 0])
+                ->get()->sortBy('start_day');
+    }
+
+    public function getYear($year)
+    {
+        $reports = $this->getYearReports($year);
+
+        return [
+            'data' => $reports,
+            'total' => $reports->sum('estimated_damage'),
+        ];
+    }
+
     public function getApproved()
     {
         return $this->incidentReport->where(['is_approved' => 1, 'is_rejected' => 0])
-                ->get();
+                ->get()->sortByDesc('created_at');
     }
 
     public function getPending()

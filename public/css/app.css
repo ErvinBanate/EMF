@@ -1,8 +1,3 @@
-.div-background {
-    background-image: url('../Image/logInPage.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
 .light-transparent-log-in {
     background-color: rgba(236, 236, 236, 0.925);
     height: 100vh;
@@ -13,7 +8,7 @@
 }
 .table-fixed tbody {
     display: block;
-    max-height: 65vh;
+    max-height: 55vh;
     overflow-y: scroll;
 }
 .table-fixed thead, tbody tr {

@@ -13,6 +13,7 @@ class ItemList extends Model
 
     protected $fillable = [
         "item_number",
+        "acronym",
         "status",
         "aquired_date",
         "person_accounted",

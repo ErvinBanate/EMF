@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Maintenance;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\User;
@@ -32,19 +33,24 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    private $maintenance;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Maintenance $maintenance)
     {
         $this->middleware('guest')->except('logout');
+        $this->maintenance = $maintenance;
     }
 
     public function ShowLoginForm()
     {
-    	return view('authentication.login');
+    	return view('auth.login', [
+            'logo' => $this->maintenance->where(['id' => 1])->get(),
+            'backgroundImage' => $this->maintenance->where(['id' => 2])->get(),
+        ]);
     }
 
     public function HandleLogin(Request $request)

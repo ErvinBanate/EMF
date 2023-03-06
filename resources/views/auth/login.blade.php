@@ -31,10 +31,15 @@
         a:hover {
             background-color: lightgray
         }
+
+        .div-background {
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
     </style>
 </head>
 
-<body class="div-background">
+<body class="div-background" style="background-image: url(../Image/{{ $backgroundImage[0]->img_url }})">
     <div class="content">
         <main>
             <div class="row justify-content-end mr-1">
@@ -42,8 +47,8 @@
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="form-block">
-                                <img class="rounded mx-auto d-block"
-                                    src="{{ asset('Image/output-onlinepngtools.png') }}" alt="" width="40%">
+                                <img class="rounded mx-auto d-block" src="{{ asset('Image/' . $logo[0]->img_url) }}"
+                                    alt="" width="40%">
                                 <div class="text-center mb-4">
                                     <h5>Fire Incident Reports and Inventory Management Information System</h3>
                                 </div>
@@ -89,16 +94,8 @@
                                         {{ __('Log In') }}
                                     </button>
                                 </form>
-                                <a href="{{ route('signIn') }}"><button
-                                        class="btn btn-pill mb-3 text-white btn-block btn-primary">Sign
-                                        Up</button></a>
                             </div>
                             <br><br><br>
-                            <div class="row">
-                                <p class="ml-3">Address: C-6, Lower Bicutan, Taguig, 1632 Metro Manila</p>
-                                <p class="ml-3">Telephone Number: 284-786-640</p>
-                            </div>
-                            <br><br>
                         </div>
                     </div>
                 </div>

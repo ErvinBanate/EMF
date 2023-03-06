@@ -16,6 +16,7 @@ class CreateItemListsTable extends Migration
         Schema::create('item_lists', function (Blueprint $table) {
             $table->id();
             $table->string("item_number");
+            $table->string("acronym");
             $table->string("status");
             $table->date("aquired_date");
             $table->string("person_accounted");

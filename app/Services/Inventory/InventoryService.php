@@ -39,6 +39,13 @@ class InventoryService
 
     public function createProduct(Request $request): void
     {
+        $request->validate([
+            'input-new-product' => 'required | string',
+            'input-new-quantity' => 'required | integer',
+            'input-new-accounted' => 'required | string',
+            'input-new-acquired' => 'required | date',
+            'input-new-expiration' => 'nullable | date | after: input-new-acquired',
+        ]);
         $parseData = $this->parseNewProduct($request);
         $acronym = "";
         $items = $this->getAllProducts();
@@ -58,13 +65,14 @@ class InventoryService
             for ($quantity = 1; $quantity <= $parseData['total_stock']; $quantity++ ) {
                 $data = [
                     'item_number' => $acronym . "-" . $quantity,
+                    'acronym' => $acronym,
                     'status' => 'working',
                     'aquired_date' => $request->input('input-new-acquired'),
                     'expiration_date' => $request->input('input-new-expiration'),
                     'person_accounted' => $request->input('input-new-accounted'),
                     'item_type' => $parseData['product_type'],
                 ];
-
+                // dd($data);
                 $this->itemList->create($data);
             }
         }
@@ -87,6 +95,13 @@ class InventoryService
 
     public function addStock(Request $request)
     {
+        $request->validate([
+            'input-add-product' => 'required | string',
+            'input-add-quantity' => 'required | integer',
+            'input-add-accounted' => 'required | string',
+            'input-add-acquired' => 'required | date | before: input-add-expiration',
+            'input-add-expiration' => 'nullable | date | after: input-add-acquired',
+        ]);
         $productName = $request->input('input-add-product');
         $product = DB::select('select * from inventories where product_name = ?', [$productName]);
         $additionalStock = (int)$request->input('input-add-quantity');
@@ -101,10 +116,10 @@ class InventoryService
         
         // dd($updatedTotalStock, $updatedWorkingStock);
 
-        DB::update('update inventories set total_stock = ?, working_stock = ? where product_name = ?', [$updatedTotalStock, $updatedWorkingStock, $productName]);
-        for ($quantity = $totalStock; $quantity <= $totalStock + $additionalStock; $quantity++) {
+        for ($quantity = $totalStock + 1; $quantity <= $totalStock + $additionalStock; $quantity++) {
             $data = [
                 'item_number' => $product[0]->item_acronym . "-" . $quantity,
+                'acronym' => $product[0]->item_acronym,
                 'status' => 'working',
                 'aquired_date' => $request->input('input-add-acquired'),
                 'expiration_date' => $request->input('input-add-expiration'),
@@ -112,6 +127,7 @@ class InventoryService
                 'item_type' => $product[0]->product_type,
             ];
 
+            DB::update('update inventories set total_stock = ?, working_stock = ? where product_name = ?', [$updatedTotalStock, $updatedWorkingStock, $productName]);
             $this->itemList->create($data);
         }
     }
@@ -162,6 +178,7 @@ class InventoryService
         for ($quantity = $product[0]->total_stock; $quantity <= $product[0]->total_stock + $request->stock; $quantity++) {
             $data = [
                 'item_number' => $product[0]->item_acronym . "-" . $quantity,
+                'acronym' => $product[0]->item_acronym,
                 'status' => 'working',
                 'aquired_date' => $request->aquired_date,
                 'expiration_date' => $request->expiration_date,
@@ -191,6 +208,7 @@ class InventoryService
         for ($quantity = 1; $quantity <= $data['total_stock']; $quantity++ ) {
             $itemData = [
                 'item_number' => $acronym . "-" . $quantity,
+                'acronym' => $acronym,
                 'status' => 'working',
                 'aquired_date' => $product_request->aquired_date,
                 'expiration_date' => $product_request->expiration_date,
@@ -200,5 +218,20 @@ class InventoryService
 
             $this->itemList->create($itemData);
         }
+    }
+
+    public function searchReports($search, $category) 
+    {
+        $resultReport = array();
+        $searchStr = '%'.$search.'%';
+
+        $resultReport = $this->inventory->where($category,'LIKE',$searchStr)->get()->sortBy('product_name');
+
+        return $resultReport;
+    }
+
+    public function getItems($status, $acronym)
+    {
+        return $this->itemList->where(['status' => $status, 'acronym' => $acronym])->get()->sortBy('item_number');
     }
 }

@@ -4,6 +4,7 @@
 <head>
     <title>FIRIMIS</title>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="{{ asset('css/bootstrap/min.css') }}" rel="stylesheet">
@@ -11,6 +12,9 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome-6.3.0/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome-6.3.0/css/brands.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome-6.3.0/css/solid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -19,14 +23,16 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/chart.js') }}"></script>
     <style>
-        #sidebar {
+        main {
             height: 100vh;
+        }
+
+        #sidebar {
             background-color: maroon;
         }
 
         main {
             background-color: rgb(252, 242, 222);
-            max-height: 100vh
         }
 
         .recentReports {
@@ -38,10 +44,10 @@
 </head>
 
 <body>
-    <div class="wrapper d-flex align-items-stretch">
+    <div class="wrapper d-flex align-items-stretch" id="main">
         <nav id="sidebar">
             <div class="p-4">
-                <img src="{{ asset('Image/output-onlinepngtools.png') }}" alt="Logo" class="logo">
+                <img src="{{ asset('Image/' . $logo[0]->img_url) }}" alt="Logo" class="logo">
                 <ul class="list-unstyled components mb-5">
                     @switch($role)
                         @case('Employee')
@@ -60,6 +66,9 @@
                                     </li>
                                     <li>
                                         <a href="{{ url('/detailedReport') }}">Detailed Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/yearlyMonthlyReport') }}">Yearly and Monthly Report Generator</a>
                                     </li>
                                 </ul>
                             </li>
@@ -82,6 +91,9 @@
                                     <li>
                                         <a href="{{ url('/detailedReport') }}">Detailed Report</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/yearlyMonthlyReport') }}">Yearly and Monthly Report Generator</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
@@ -89,7 +101,7 @@
                                     class="dropdown-toggle">Inventory Management</a>
                                 <ul class="collapse list-unstyled" id="inventorySubMenu">
                                     <li>
-                                        <a href="{{ url('/inventory') }}">Inventory List</a>
+                                        <a href="{{ url('/inventory') }}">Item List</a>
                                     </li>
                                     <li>
                                         <a href="{{ url('/inventoryRequest') }}">Request List</a>
@@ -112,6 +124,9 @@
                                     <li>
                                         <a href="{{ url('/detailedReport') }}">Detailed Report</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/yearlyMonthlyReport') }}">Yearly and Monthly Report Generator</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
@@ -121,10 +136,24 @@
                                 <a href="{{ url('/users') }}">List of Users</a>
                             </li>
                             <li>
-                                <a href="{{ url('/adminInventory') }}">Inventory Management</a>
+                                <a href="{{ url('/adminInventory') }}">Item Management</a>
                             </li>
                             <li>
-                                <a href="{{ url('/adminInventoryRequest') }}">Inventory Requests</a>
+                                <a href="{{ url('/adminInventoryRequest') }}">Item Requests</a>
+                            </li>
+                            <li><a href="#maintenanceSubMenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Webpage Settings</a>
+                                <ul class="collapse list-unstyled" id="maintenanceSubMenu">
+                                    <li>
+                                        <a href="{{ url('/logoMaintenance') }}">Logo Maintenance</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/logInMaintenance') }}">LogIn Page Background Image Maintenance</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/executivesMaintenance') }}">Executives List</a>
+                                    </li>
+                                </ul>
                             </li>
                         @break
 

@@ -79,6 +79,17 @@
                     <li>
                         <a href="{{ url('/adminInventoryRequest') }}">Inventory Requests</a>
                     </li>
+                    <li><a href="#maintenanceSubMenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Maintenance</a>
+                        <ul class="collapse list-unstyled" id="maintenanceSubMenu">
+                            <li>
+                                <a href="{{ url('/logoMaintenance') }}">Logo Maintenance</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/logInMaintenance') }}">LogIn Page Background Image Maintenance</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle" href="#profileLogOut" data-toggle="collapse" aria-expanded="false">
                             Account

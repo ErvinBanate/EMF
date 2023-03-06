@@ -10,6 +10,14 @@
             </ol>
         </nav>
     </div>
+    @if (Session::has('success'))
+        <div class='alert alert-success alert-dismissible' role='alert'>
+            <button type='button' class='close' data-dismiss='alert'>
+                <i class='fa fa-times'></i>
+            </button>
+            <strong>Success ! {{ Session::get('success') }}</strong>
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -52,13 +60,12 @@
                                 @foreach ($users as $user)
                                     @if ($user->id == Auth::user()->id)
                                         <div class="col-3">
-                                            <a href="{{ route('editUser', $user->id) }}">
-                                                <button class="btn btn-primary">Edit User Details</button>
-                                            </a>
+                                            <a href="{{ route('editUser', $user->id) }}" class="btn btn-primary">Edit User
+                                                Details</a>
                                         </div>
                                         <div class="col-4">
-                                            <a href="{{ route('changePassword', $user->id) }}"><button
-                                                    class="btn btn-primary">Change Password</button></a>
+                                            <a href="{{ route('changePassword', $user->id) }}"
+                                                class="btn btn-primary">Change Password</a>
                                         </div>
                                     @endif
                                 @endforeach

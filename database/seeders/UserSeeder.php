@@ -18,20 +18,20 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'Admin',
-                'admin@gmail.com',
-                'adminlowerbicutanfire',
+                'admin.example@gmail.com',
+                'adminexample',
                 3,
             ],
             [
                 'Team Leader',
-                'team.leader@gmail.com',
-                'teamleaderlowerbicutanfire',
+                'teamlead.example@gmail.com',
+                'teamleaderxample',
                 2,
             ],
             [
                 'On Site Employee',
-                'employee@gmail.com',
-                'employeelowerbicutanfire',
+                'onsitelead.example@gmail.com',
+                'onsiteexample',
                 1,
             ],
         ];

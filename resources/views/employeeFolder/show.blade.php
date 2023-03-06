@@ -1,6 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Modal -->
+    <div class="modal fade" id="rejectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Rejection Notes<span style="color: red">*</span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <form class="g-3" method="POST" action="{{ route('reject', $report->id) }}">
+                            @csrf
+                            <div class="row modal-body">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" type="date" name="input-rejection-notes" rows="5" style="resize: none"></textarea>
+                                    @error('input-rejection-notes')
+                                        <span class="invalidFeedback" role="alert" style="color: red">
+                                            {{ str_replace('input-rejection-notes', 'Rejection Notes', $message) }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button class="btn btn-primary" type="submit">Reject</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="pagetitle">
         @if ($action === 'show')
             <h3>View Incident Report</h3>
@@ -21,60 +57,6 @@
             </ol>
         </nav>
     </div>
-    {{-- <div class="container"> --}}
-    {{-- <div class="row justify-content-center">
-        <div class="col-md-12">
-            <form class="row g-3">
-                <div class="col-md-2">
-                    <label class="form-label" for="input-baranggay">Baranggay</label>
-                    <p class="form-control">{{ $report->baranggay }}</p>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="input-location">Location</label>
-                    <p class="form-control">{{ $report->location }}</p>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label" for="input-date">Date</label>
-                    <p class="form-control">{{ $report->month }} {{ $report->day }}, {{ $report->year }}</p>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="input-fire-alarm-level">Fire Alarm Level</label>
-                    <p class="form-control">{{ $report->fire_alarm_level }}</p>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="input-cause-of-incident">Cause of Incident</label>
-                    <p class="form-control">{{ $report->cause_of_incident }}</p>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="input-estimated-damage">Estimated Damage</label>
-                    <p class="form-control">&#8369;{{ number_format($report['estimated_damage']) }}</p>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="input-reported-by">Reported By</label>
-                    <p class="form-control">{{ $report->reportedBy->name }}</p>
-                </div>
-                <div class="col-md-12" style="height: 350px">
-                    <label class="form-label" for="input-description">Description</label>
-                    <textarea class="form-control" style="height: 90%; background-color: white" disabled>{{ strip_tags($report->description) }}</textarea>
-                </div>
-                <div class="col-md-12 ">
-                    @if ($action === 'edit')
-                        <button class="btn btn-primary" type="submit">Update</button>
-                    @endif
-                    @if ($action === 'ApproveOrReject')
-                        <a href="{{ route('approve', $report->id) }}" class="btn btn-primary">Approve</a>
-                        <a href="{{ route('reject', $report->id) }}" class="btn btn-primary">Reject</a>
-                    @endif
-                </div>
-                @if ($action === 'report')
-                    <div class="col-12">
-                        <a type="button" class="btn btn-info" href="{{ route('downloadReportPdf', $report->id) }}">Export
-                            as PDF</a>
-                    </div>
-                @endif
-            </form>
-        </div>
-    </div> --}}
     <div class="row justify-content-center">
         <div class="col-md-12">
             <form class="row g-3" method="POST" action="{{ route('update', $report->id) }}">
@@ -139,21 +121,33 @@
                     <label class="form-label" for="input-families-affected">Number of Families Affected</label>
                     <p class="form-control">{{ $report->families_affected }}</p>
                 </div>
-                <div class="col-md-12" style="height: 200px">
+                <div class="col-md-12" style="height: 150px">
                     <label class="form-label" for="input-description">Description</label>
-                    <textarea class="form-control" style="height: 90%; background-color: white" disabled>{{ strip_tags($report->description) }}</textarea>
+                    <textarea class="form-control" style="height: 75%; background-color: white" disabled>{{ strip_tags($report->description) }}</textarea>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div style="container">
+                        <img src="{{ asset('Image/' . $report->image) }}" alt="Evidence Image"
+                            style="width: 350px; display: block; margin-left: auto; margin-right: auto;">
+                    </div>
                 </div>
                 <div class="col-12 mt-3">
+                    @if ($action === 'show')
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('downloadReportPdf', $report['id']) }}" class="btn btn-primary">Export PDF</a>
+                    @endif
                     @if ($action === 'edit')
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                         <button class="btn btn-primary" type="submit">Update</button>
                     @endif
                     @if ($action === 'ApproveOrReject')
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                         <a href="{{ route('approve', $report->id) }}" class="btn btn-primary">Approve</a>
-                        <a href="{{ route('reject', $report->id) }}" class="btn btn-primary">Reject</a>
+                        <button class="btn btn-primary" type="button" data-toggle="modal"
+                            data-target="#rejectionModal">Return</button>
                     @endif
                 </div>
             </form>
         </div>
     </div>
-    {{-- </div> --}}
 @endsection

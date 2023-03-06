@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="pagetitle">
-        <h3>Inventory</h3>
+        <h3>Item List</h3>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                <li class="breadcrumb-item active">Inventory</li>
+                <li class="breadcrumb-item active">Item List</li>
             </ol>
         </nav>
     </div>
@@ -14,11 +14,11 @@
         <div class="row justify-content-center p-4 bg-light shadow">
             <table class="table table-bordered table-hover table-fixed">
                 <thead class="thead-dark">
-                    <th>Product</th>
+                    <th>Item</th>
                     <th>Total Stock</th>
                     <th>Working Stock</th>
                     <th>Not Working Stock</th>
-                    <th>Product Type</th>
+                    <th>Item Type</th>
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
