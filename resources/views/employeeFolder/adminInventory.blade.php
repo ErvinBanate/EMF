@@ -240,18 +240,25 @@
                 $value = $(this).val();
                 $category = $('#search-category').val();
                 // console.log($value);
-                $.ajax({
-                    type: 'post',
-                    url: 'http://localhost:8000/searchInventory',
-                    data: {
-                        'search': $value,
-                        'category': $category,
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('tbody').html(data);
-                    }
-                });
+                if ($value == '') {
+                    $.ajax({
+                        type: 'get',
+                        url: 'https://firimis.puptcapstone.net/adminInventory',
+                    });
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: 'https://firimis.puptcapstone.net/searchInventory',
+                        data: {
+                            'search': $value,
+                            'category': $category,
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            $('tbody').html(data);
+                        }
+                    });
+                }
             })
         </script>
         <script type="text/javascript">

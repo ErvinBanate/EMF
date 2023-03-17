@@ -74,12 +74,12 @@
                 if ($value == '') {
                     $.ajax({
                         type: 'get',
-                        url: 'http://localhost:8000/incidentReport',
+                        url: 'http://firimis.puptcapstone.net/incidentReport',
                     });
                 } else {
                     $.ajax({
                         type: 'post',
-                        url: 'http://localhost:8000/searchDetailed',
+                        url: 'https://firimis.puptcapstone.net/search',
                         data: {
                             'search': $value,
                             'category': $category,

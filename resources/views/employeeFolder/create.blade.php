@@ -187,18 +187,25 @@
                 $value = $(this).val();
                 $category = $('#search-category').val();
                 // console.log($value);
-                $.ajax({
-                    type: 'post',
-                    url: 'http://localhost:8000/search',
-                    data: {
-                        'search': $value,
-                        'category': $category,
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('tbody').html(data);
-                    }
-                });
+                if ($value == '') {
+                    $.ajax({
+                        type: 'get',
+                        url: 'https://firimis.puptcapstone.net/incidentReport',
+                    });
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: 'https://firimis.puptcapstone.net/search',
+                        data: {
+                            'search': $value,
+                            'category': $category,
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            $('tbody').html(data);
+                        }
+                    });
+                }
             })
         </script>
         <script type="text/javascript">
