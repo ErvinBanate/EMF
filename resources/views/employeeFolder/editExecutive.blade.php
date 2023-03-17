@@ -38,7 +38,7 @@
 
                             <div class="row mb-3">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Position') }}</label>
 
                                 <div class="col-md-6">
                                     <p class="form-control">{{ $executive->position }}</p>

@@ -36,6 +36,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <a href="{{ url('/logoMaintenance') }}" class="btn btn-secondary">Cancel</a>
                                 <button class="btn btn-primary" type="submit">Update Logo</button>
                             </div>
                         </form>

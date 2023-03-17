@@ -40,7 +40,7 @@
             display: inline-block;
         }
 
-        .overflowTable {
+        p .overflowTable {
             max-height: 800px;
         }
     </style>
@@ -74,10 +74,10 @@
                         <a href="{{ url('/users') }}">List of Users</a>
                     </li>
                     <li>
-                        <a href="{{ url('/adminInventory') }}">Inventory Management</a>
+                        <a href="{{ url('/adminInventory') }}">Item Management</a>
                     </li>
                     <li>
-                        <a href="{{ url('/adminInventoryRequest') }}">Inventory Requests</a>
+                        <a href="{{ url('/adminInventoryRequest') }}">Item Requests</a>
                     </li>
                     <li><a href="#maintenanceSubMenu" data-toggle="collapse" aria-expanded="false"
                             class="dropdown-toggle">Maintenance</a>

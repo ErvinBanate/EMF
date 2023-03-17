@@ -188,14 +188,14 @@ class adminController extends Controller
     {
         $this->inventoryService->createProduct($request);
 
-        return redirect()->route('adminInventory');
+        return redirect()->route('adminInventory')->with('success', 'Item has been Created!');
     }
 
    public function addStock(Request $request)
     {
         $this->inventoryService->addStock($request);
 
-        return redirect()->route('adminInventory');
+        return redirect()->route('adminInventory')->with('success', 'Additional Stock has been Added!');;
     }
 
     public function removeStock(Request $request)
@@ -209,7 +209,7 @@ class adminController extends Controller
     {
         $inventory_product->delete();
 
-        return redirect()->route('adminInventory');
+        return redirect()->route('adminInventory')->with('success', 'Item has been Removed!');
     }
 
     public function searchInventory(Request $request) {

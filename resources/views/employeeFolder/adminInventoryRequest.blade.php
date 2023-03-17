@@ -10,6 +10,14 @@
             </ol>
         </nav>
     </div>
+    @if (Session::has('success'))
+        <div class='alert alert-success alert-dismissible' role='alert'>
+            <button type='button' class='close' data-dismiss='alert'>
+                <i class='fa fa-times'></i>
+            </button>
+            <strong>Success ! {{ Session::get('success') }}</strong>
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center p-4 bg-light">
             <table class="table table-bordered table-hover table-fixed">

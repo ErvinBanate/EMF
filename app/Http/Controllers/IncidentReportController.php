@@ -605,7 +605,7 @@ class incidentReportController extends Controller
     {
         $this->inventoryService->createNewProductRequest($request);
         
-        return redirect()->route('inventoryRequest');
+        return redirect()->route('inventoryRequest')->with('success', 'Item Request has been created!');
     }
 
     public function removeRequest(InventoryRequest $product_request)
@@ -651,7 +651,7 @@ class incidentReportController extends Controller
         
         $product_request->update($data);
 
-        return redirect()->route('adminInventoryRequest');
+        return redirect()->route('adminInventoryRequest')->with('success', 'Item Request has been Approved!');
     }
 
     public function rejectRequest(InventoryRequest $product_request)
@@ -659,7 +659,7 @@ class incidentReportController extends Controller
         $data = ['is_rejected' => 1];
         $product_request->update($data);
 
-        return redirect()->route('adminInventoryRequest');
+        return redirect()->route('adminInventoryRequest')->with('success', 'Item Request has been Rejected!');
     }
 
     public function viewItemList(Inventory $product) {
