@@ -58,6 +58,9 @@
                                 <a href="{{ url('/incidentReport') }}">Fire Incident Reports</a>
                             </li>
                             <li>
+                                <a href="{{ url('/accomplishmentReport') }}">Accomplishment Report</a>
+                            </li>
+                            <li>
                                 <a href="#reportSubMenu" data-toggle="collapse" aria-expanded="false"
                                     class="dropdown-toggle">Generate Reports</a>
                                 <ul class="collapse list-unstyled" id="reportSubMenu">
@@ -80,6 +83,9 @@
                             </li>
                             <li>
                                 <a href="{{ url('/incidentReport') }}">Manage Fire Incident Reports</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/accomplishmentReport') }}">Accomplishment Report</a>
                             </li>
                             <li>
                                 <a href="#reportSubMenu" data-toggle="collapse" aria-expanded="false"

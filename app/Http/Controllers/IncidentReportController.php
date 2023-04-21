@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\IncidentReportExport;
 use App\Exports\PendingIncidentReportExport;
 use App\Exports\RejectedIncidentReportExport;
+use App\Http\Requests\CreateNewAccomplishmentRequest;
 use App\Http\Requests\CreateNewReportRequest;
 use App\Models\IncidentReport;
 use App\Models\Inventory;
@@ -330,6 +331,22 @@ class incidentReportController extends Controller
             'action' => 'create',
             'months' => $this->months,
         ]);
+    }
+
+    public function accomplishmentReport() {
+        $role = Auth::user()->role->role_name;
+        return view('employeeFolder.accomplishmentReport', [
+            'logo' => $this->maintenance->where(['id' => 1])->get(),
+            'accomplishments' => $this->incidentReportService->getAccomplishment(),
+            'role' => $role,
+            'months' => $this->months,
+        ]);
+    }
+
+    public function createAccomplishment(CreateNewAccomplishmentRequest $request) {
+        $this->incidentReportService->createAccomplishment($request);
+
+        return redirect()->route('accomplishmentReport')->with('success', 'Accomplishment Report has been Created!');;
     }
 
     public function teamLeadCreate()

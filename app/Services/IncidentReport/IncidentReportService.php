@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services\IncidentReport;
 
+use App\Models\AccomplishmentReport;
 use App\Models\IncidentReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -13,10 +14,22 @@ use Illuminate\Support\Facades\DB;
 class IncidentReportService 
 {
     private $incidentReport;
+    private $accomplishmentReport;
 
-    public function __construct(IncidentReport $incidentReport)
+    public function __construct(IncidentReport $incidentReport, AccomplishmentReport $accomplishmentReport)
     {
         $this->incidentReport = $incidentReport;
+        $this->accomplishmentReport = $accomplishmentReport;
+    }
+
+    public function getAccomplishment() {
+        return $this->accomplishmentReport->all();
+    }
+
+    public function createAccomplishment($request) {
+        $data = $this->parseAccomplishment($request);
+        
+        $this->accomplishmentReport->create($data);
     }
 
     public function create($request): void
@@ -279,6 +292,20 @@ class IncidentReportService
             'baranggay' => $request['input-baranggay'],
             'location' => $request['input-location'],
             'is_rejected' => 0,
+        ];
+    }
+
+    public function parseAccomplishment($request) : array
+    {
+        return [
+            'task' => $request['input-task'],
+            'accomplishments' => $request['input-accomplishment'],
+            'month' => $request['input-month'],
+            'day' => $request['input-day'],
+            'year' => $request['input-year'],
+            'time_started' => $request['input-time-started'],
+            'time_ended' => $request['input-time-ended'],
+            'remarks' => $request['input-remarks'],
         ];
     }
 }

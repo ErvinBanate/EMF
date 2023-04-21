@@ -13,7 +13,7 @@ class CreateNewAccomplishmentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class CreateNewAccomplishmentRequest extends FormRequest
     public function rules()
     {
         return [
-            ''
+            'input-task' => 'required | string',
+            'input-accomplishment' => 'required | string',
+            'input-month' => 'required | string',
+            'input-day' => 'required | integer',
+            'input-year' => 'required | integer',
+            'input-time-started' => 'required | string',
+            'input-time-ended' => 'required | string',
+            'input-remarks' => 'required | string',
         ];
     }
 }

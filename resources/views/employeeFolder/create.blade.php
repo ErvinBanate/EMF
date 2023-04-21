@@ -190,7 +190,7 @@
                 if ($value == '') {
                     $.ajax({
                         type: 'get',
-                        url: 'https://firimis.puptcapstone.net/incidentReport',
+                        url: 'httponip  ; s://firimis.puptcapstone.net/incidentReport',
                     });
                 } else {
                     $.ajax({

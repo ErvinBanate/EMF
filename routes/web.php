@@ -64,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users', [adminController::class, 'showUsers'])->name('users');
 
     Route::get('/incidentReport', [IncidentReportController::class, 'create'])->name('create');
+    Route::get('/accomplishmentReport', [IncidentReportController::class, 'accomplishmentReport'])->name('accomplishmentReport');
+    Route::post('/createAccomplishment', [IncidentReportController::class, 'createAccomplishment'])->name('createAccomplishment');
 
     Route::get('/teamLeadCreate', [IncidentReportController::class, 'teamLeadCreate'])->name('teamLeadCreate');
     Route::get('/inventory', [IncidentReportController::class, 'inventory'])->name('inventory');
