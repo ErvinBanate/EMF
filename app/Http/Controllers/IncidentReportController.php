@@ -7,6 +7,7 @@ use App\Exports\PendingIncidentReportExport;
 use App\Exports\RejectedIncidentReportExport;
 use App\Http\Requests\CreateNewAccomplishmentRequest;
 use App\Http\Requests\CreateNewReportRequest;
+use App\Models\AccomplishmentReport;
 use App\Models\IncidentReport;
 use App\Models\Inventory;
 use App\Models\InventoryRequest;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\DB;
 class incidentReportController extends Controller
 {
     private $incidentReportService;
+    private $accomplishmentReport;
     private $maintenance;
     private $listOfExecutives;
     private $inventoryService;
@@ -61,13 +63,14 @@ class incidentReportController extends Controller
         'December',
     ];
 
-    public function __construct(IncidentReportService $incidentReportService, InventoryService $inventoryService, Inventory $inventory, ItemList $itemList, Maintenance $maintenance, ListOfExecutives $listOfExecutives) {
+    public function __construct(IncidentReportService $incidentReportService, InventoryService $inventoryService, Inventory $inventory, ItemList $itemList, Maintenance $maintenance, ListOfExecutives $listOfExecutives, AccomplishmentReport $accomplishmentReport) {
         $this->incidentReportService = $incidentReportService;
         $this->itemList = $itemList;
         $this->inventoryService = $inventoryService;
         $this->inventory = $inventory;
         $this->maintenance = $maintenance;
         $this->listOfExecutives = $listOfExecutives;
+        $this->accomplishmentReport = $accomplishmentReport;
     }
 
     public function signIn() {
@@ -321,11 +324,22 @@ class incidentReportController extends Controller
         return Response($output);
     }
 
-    public function createIncidentReport()
-    {
+    public function createIncidentReport() {
         $role = Auth::user()->role->role_name;
         return view('employeeFolder.createIncidentReport', [
             'logo' => $this->maintenance->where(['id' => 1])->get(),
+            'fireAlarmLevels' => $this->fireAlarmLevels,
+            'role' => $role,
+            'action' => 'create',
+            'months' => $this->months,
+        ]);
+    }
+
+    public function removedIncidentReport() {
+        $role = Auth::user()->role->role_name;
+        return view('employeeFolder.deletedIncidentReport', [
+            'logo' => $this->maintenance->where(['id' => 1])->get(),
+            'reports' => $this->incidentReportService->getDeletedReports(),
             'fireAlarmLevels' => $this->fireAlarmLevels,
             'role' => $role,
             'action' => 'create',
@@ -347,6 +361,12 @@ class incidentReportController extends Controller
         $this->incidentReportService->createAccomplishment($request);
 
         return redirect()->route('accomplishmentReport')->with('success', 'Accomplishment Report has been Created!');;
+    }
+
+    public function removeAccomplishment(AccomplishmentReport $accomplishmentReport) {
+        $accomplishmentReport->delete();
+
+        return redirect()->route('accomplishmentReport');
     }
 
     public function teamLeadCreate()
@@ -492,6 +512,12 @@ class incidentReportController extends Controller
         $incident_report->delete();
 
         return redirect()->route('create');
+    }
+
+    public function restore($incident_report) {
+        $this->incidentReportService->restore($incident_report);
+
+        return redirect()->route('removedIncidentReport');
     }
 
     public function approve(IncidentReport $incident_report)

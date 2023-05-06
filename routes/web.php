@@ -8,6 +8,7 @@ use App\Models\IncidentReport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerifyController;
+use App\Services\IncidentReport\IncidentReportService;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +53,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit/{incident_report}', [IncidentReportController::class, 'edit'])->name('edit');
 
     Route::get('/createIncidentReport', [IncidentReportController::class, 'createIncidentReport'])->name('createIncidentReport');
+    Route::get('/removedIncidentReport', [IncidentReportController::class, 'removedIncidentReport'])->name('removedIncidentReport');
 
     Route::get('/remove/{incident_report}', [IncidentReportController::class, 'destroy'])->name('remove');
+    Route::get('/restore/{incident_report}', [IncidentReportController::class, 'restore'])->name('restore');
     Route::get('/show/{incident_report}', [IncidentReportController::class, 'show'])->name('show');
 
     Route::get('/confirmData/{incident_report}', [IncidentReportController::class, 'confirmData'])->name('confirmData');
@@ -66,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/incidentReport', [IncidentReportController::class, 'create'])->name('create');
     Route::get('/accomplishmentReport', [IncidentReportController::class, 'accomplishmentReport'])->name('accomplishmentReport');
     Route::post('/createAccomplishment', [IncidentReportController::class, 'createAccomplishment'])->name('createAccomplishment');
+    Route::get('/removeAccomplishment/{accomplishmentReport}', [IncidentReportController::class, 'removeAccomplishment'])->name('removeAccomplishment');
 
     Route::get('/teamLeadCreate', [IncidentReportController::class, 'teamLeadCreate'])->name('teamLeadCreate');
     Route::get('/inventory', [IncidentReportController::class, 'inventory'])->name('inventory');

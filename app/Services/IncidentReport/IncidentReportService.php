@@ -43,6 +43,10 @@ class IncidentReportService
         $this->incidentReport->create($data);
     }
 
+    public function restore($incident_report) {
+        $this->incidentReport->onlyTrashed()->where('id', $incident_report)->restore();
+    }
+
     public function update($request, IncidentReport $incident_report): void
     {
 
@@ -155,6 +159,10 @@ class IncidentReportService
     public function getNew5()
     {
         return $this->incidentReport->all()->sortByDesc('created_at')->take(5);
+    }
+
+    public function getDeletedReports() {
+        return $this->incidentReport->onlyTrashed()->with('reportedBy')->where('reported_by', Auth::user()->id)->get()->sortByDesc('deleted_at');
     }
 
     public function getIncidentReports(string $role)

@@ -48,6 +48,7 @@
                         Create Incident Report
                     </button>
                 </a>
+                <a href="{{ url('removedIncidentReport') }}" class="btn btn-primary">Removed Incident Reports</a>
             @elseif ($role === 'Team Leader')
                 <a href="{{ url('/teamLeadCreate') }}">
                     <button type="button" class="btn btn-primary">

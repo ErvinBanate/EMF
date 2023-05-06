@@ -24,6 +24,7 @@ class CreateAccomplishmentReportsTable extends Migration
             $table->string('task');
             $table->string('accomplishments');
             $table->string('remarks')->nullable();
+            
             $table->timestamps();
             $table->softDeletes();
         });

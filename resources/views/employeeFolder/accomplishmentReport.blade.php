@@ -128,7 +128,8 @@
                             <td class='text-center'>{{ $accomplishment['accomplishments'] }}</td>
                             <td class='text-center'>{{ $accomplishment['remarks'] }}
                             </td>
-                            <td></td>
+                            <td class="text-center"><a href="{{ route('removeAccomplishment', $accomplishment['id']) }}"
+                                    class="btn btn-primary"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
